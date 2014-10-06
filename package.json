@@ -1,0 +1,29 @@
+{
+  "name": "farmhash",
+  "version": "0.0.1",
+  "author": "Lovell Fuller <npm@lovell.info>",
+  "description": "Node.js implementation of FarmHash, Google's family of high performance hash functions for strings",
+  "scripts": {
+    "test": "node test/unit"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lovell/farmhash"
+  },
+  "keywords": [
+    "farmhash",
+    "hash",
+    "cityhash",
+    "murmurhash",
+    "string",
+    "fast"
+  ],
+  "dependencies": {
+    "nan": "^1.3.0"
+  },
+  "license": "Apache 2.0",
+  "engines": {
+    "node": ">=0.10"
+  }
+}
