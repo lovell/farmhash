@@ -4,7 +4,138 @@
 var assert = require('assert');
 var farmhash = require('../index');
 
-var theQuickBrownFox = 'The quick brown fox jumped over the lazy sleeping dog';
+var input = 'The quick brown fox jumped over the lazy sleeping dog';
+var seed = 123;
 
-var hash = farmhash.Hash64(theQuickBrownFox);
-assert.strictEqual(true, /^[0-9]{1,21}$/.test(hash));
+// hash32 - valid
+var hash32 = farmhash.hash32(input);
+assert.strictEqual('number', typeof hash32);
+assert.strictEqual(true, hash32 > 0);
+
+// hash32 - invalid
+try {
+  farmhash.hash32(seed);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+
+// hash32WithSeed - valid
+var hash32WithSeed = farmhash.hash32WithSeed(input, seed);
+assert.strictEqual('number', typeof hash32WithSeed);
+assert.strictEqual(true, hash32WithSeed > 0);
+
+// hash32WithSeed - invalid
+try {
+  farmhash.hash32WithSeed(input);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+try {
+  farmhash.hash32WithSeed(seed, seed);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+try {
+  farmhash.hash32WithSeed(input, input);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+
+// hash64 - valid
+var hash64 = farmhash.hash64(input);
+assert.strictEqual('string', typeof hash64);
+assert.strictEqual(true, /^[0-9]{1,20}$/.test(hash64));
+
+// hash64 - invalid
+try {
+  farmhash.hash64(seed);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+
+// hash64WithSeed - valid
+var hash64WithSeed = farmhash.hash64WithSeed(input, seed);
+assert.strictEqual('string', typeof hash64WithSeed);
+assert.strictEqual(true, /^[0-9]{1,20}$/.test(hash64WithSeed));
+
+// hash64WithSeed - invalid
+try {
+  farmhash.hash64WithSeed(input);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+try {
+  farmhash.hash64WithSeed(seed, seed);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+try {
+  farmhash.hash32WithSeed(input, input);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+
+// hash64WithSeeds - valid
+var hash64WithSeeds = farmhash.hash64WithSeeds(input, seed, seed);
+assert.strictEqual('string', typeof hash64WithSeeds);
+assert.strictEqual(true, /^[0-9]{1,20}$/.test(hash64WithSeeds));
+
+// hash64WithSeeds - invalid
+try {
+  farmhash.hash64WithSeeds(input);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+try {
+  farmhash.hash64WithSeeds(input, seed);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+try {
+  farmhash.hash64WithSeeds(input, input, input);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+try {
+  farmhash.hash64WithSeeds(seed, seed, seed);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+
+// fingerprint32 - valid
+var fingerprint32 = farmhash.fingerprint32(input);
+assert.strictEqual('number', typeof fingerprint32);
+assert.strictEqual(2280764877, fingerprint32);
+
+// fingerprint32 - invalid
+try {
+  farmhash.fingerprint32(seed);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}
+
+// fingerprint64 - valid
+var fingerprint64 = farmhash.fingerprint64(input);
+assert.strictEqual('string', typeof fingerprint64);
+assert.strictEqual('17097846426514660294', fingerprint64);
+
+// fingerprint64 - invalid
+try {
+  farmhash.fingerprint64(seed);
+  assert.ok(false);
+} catch (err) {
+  assert.ok(true);
+}

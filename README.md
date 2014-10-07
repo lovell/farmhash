@@ -2,13 +2,11 @@
 
 Node.js implementation of Google's [FarmHash](https://code.google.com/p/farmhash/) family of very fast hash functions.
 
-FarmHash is the successor to CityHash.
+FarmHash is the successor to CityHash. Functions in the FarmHash family are not suitable for cryptography.
 
-Functions in the FarmHash family are not suitable for cryptography.
+As the V8 JavaScript engine only natively supports 32-bit unsigned integers, the 64-bit methods return String objects instead of Numbers and the 128-bit methods are not implemented.
 
-As V8 does not natively support 64 bit unsigned integers this module returns hash values as String objects.
-
-Compiled and tested with Node.js v0.10 (stable) and v0.11 (unstable).
+This module has been compiled and tested with Node.js v0.10.x (stable) and v0.11.x (unstable).
 
 ## Installation
 
@@ -23,14 +21,84 @@ var farmhash = require('farmhash');
 ```
 
 ```javascript
-var hash = farmhash.Hash64(string);
+var hash = farmhash.hash32('test');
+console.log(typeof hash); // 'number'
+```
+
+```javascript
+var hash = farmhash.hash64('test');
+console.log(typeof hash); // 'string'
+```
+
+```javascript
+var hash = farmhash.hash64WithSeed('test', 123);
+console.log(typeof hash); // 'string'
+```
+
+```javascript
+var hash = farmhash.fingerprint32('test');
+console.log(typeof hash); // 'number'
+```
+
+```javascript
+var hash = farmhash.fingerprint64('test');
+console.log(typeof hash); // 'string'
 ```
 
 ## API
 
-### Hash64(string)
+### Hash
 
-Return a String representing the 64 bit unsigned integer hash value of the input `string`.
+The hash methods are platform dependent. Different CPU architectures, for example 32-bit vs 64-bit, Intel vs ARM, might produce different results for a given input.
+
+#### hash32(input)
+
+* `input` is the String to hash.
+
+Returns a Number containing the 32-bit unsigned integer hash value of `input`.
+
+#### hash32WithSeed(input, seed)
+
+* `input` is the String to hash.
+* `seed` is an integer Number to use as a seed.
+
+Returns a Number containing the 32-bit unsigned integer hash value of `input`.
+
+#### hash64(input)
+
+* `input` is the String to hash.
+
+Returns a String representing the 64-bit unsigned integer hash value of `input`.
+
+#### hash64WithSeed(input, seed)
+
+* `input` is the String to hash.
+* `seed` is an integer Number to use as a seed.
+
+Returns a String representing the 64-bit unsigned integer hash value of `input`.
+
+#### hash64WithSeeds(input, seed1, seed2)
+
+* `input` is the String to hash.
+* `seed1` and `seed2` are integer Numbers to use as seeds.
+
+Returns a String representing the 64-bit unsigned integer hash value of `input`.
+
+### Fingerprint
+
+The fingerprint methods are platform independent, producing the same results for a given input on any machine.
+
+#### fingerprint32(input)
+
+* `input` is the String to fingerprint.
+
+Returns a Number containing the 32-bit unsigned integer fingerprint value of `input`.
+
+#### fingerprint64(input)
+
+* `input` is the String to fingerprint.
+
+Returns a String representing the 64-bit unsigned integer fingerprint value of `input`.
 
 ## Testing
 
