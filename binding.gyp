@@ -13,6 +13,7 @@
         '-Wall',
         '-march=native',
         '-Ofast',
+        '-flto',
         '-funroll-loops'
     ],
     'xcode_settings': {
