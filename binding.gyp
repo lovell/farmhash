@@ -22,7 +22,6 @@
         '-Wall',
         '-march=native',
         '-Ofast',
-        '-flto',
         '-funroll-loops'
       ]
     }
