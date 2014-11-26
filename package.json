@@ -1,6 +1,6 @@
 {
   "name": "farmhash",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Lovell Fuller <npm@lovell.info>",
   "description": "Node.js implementation of FarmHash, Google's family of high performance hash functions for strings",
   "scripts": {
@@ -16,11 +16,10 @@
     "hash",
     "cityhash",
     "murmurhash",
-    "string",
-    "fast"
+    "fingerprint"
   ],
   "dependencies": {
-    "nan": "^1.3.0"
+    "nan": "^1.4.1"
   },
   "license": "Apache 2.0",
   "engines": {
