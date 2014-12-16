@@ -30,56 +30,72 @@ module.exports = {
 
   // Hash methods - platform dependent
   hash32: function(input) {
-    verifyStringOrBuffer(input);
-    return farmhash.Hash32(input);
-  },
-  hash32Buffer: function(input) {
-    verifyBuffer(input);
-    return farmhash.Hash32Buffer(input);
-  },
-  hash32String: function(input) {
-    verifyString(input);
-    return farmhash.Hash32String(input);
+    if (typeof input === 'string') {
+      return farmhash.Hash32String(input);
+    }
+    if (Buffer.isBuffer(input)) {
+      return farmhash.Hash32Buffer(input);
+    }
+    throw new Error('Expected a String or Buffer for input');
   },
   hash32WithSeed: function(input, seed) {
-    verifyStringOrBuffer(input);
     verifyInteger(seed);
-    return farmhash.Hash32WithSeed(input, seed);
-  },
-  hash32WithSeedString: function(input, seed) {
-    verifyString(input);
-    verifyInteger(seed);
-    return farmhash.Hash32WithSeedString(input, seed);
-  },
-  hash32WithSeedBuffer: function(input, seed) {
-    verifyBuffer(input);
-    verifyInteger(seed);
-    return farmhash.Hash32WithSeedBuffer(input, seed);
+    if (typeof input === 'string') {
+      return farmhash.Hash32WithSeedString(input, seed);
+    }
+    if (Buffer.isBuffer(input)) {
+      return farmhash.Hash32WithSeedBuffer(input, seed);
+    }
+    throw new Error('Expected a String or Buffer for input');
   },
   hash64: function(input) {
-    verifyString(input);
+    if (typeof input === 'string') {
+      return farmhash.Hash64String(input);
+    }
+    if (Buffer.isBuffer(input)) {
+      return farmhash.Hash64Buffer(input);
+    }
+    throw new Error('Expected a String or Buffer for input');
     return farmhash.Hash64(input);
   },
   hash64WithSeed: function(input, seed) {
-    verifyString(input);
     verifyInteger(seed);
-    return farmhash.Hash64WithSeed(input, seed);
+    if (typeof input === 'string') {
+      return farmhash.Hash64WithSeedString(input, seed);
+    }
+    if (Buffer.isBuffer(input)) {
+      return farmhash.Hash64WithSeedBuffer(input, seed);
+    }
+    throw new Error('Expected a String or Buffer for input');
   },
   hash64WithSeeds: function(input, seed1, seed2) {
-    verifyString(input);
     verifyInteger(seed1);
     verifyInteger(seed2);
-    return farmhash.Hash64WithSeeds(input, seed1, seed2);
+    if (typeof input === 'string') {
+      return farmhash.Hash64WithSeedsString(input, seed1, seed2);
+    }
+    if (Buffer.isBuffer(input)) {
+      return farmhash.Hash64WithSeedsBuffer(input, seed1, seed2);
+    }
+    throw new Error('Expected a String or Buffer for input');
   },
 
   // Fingerprint methods - platform independent
   fingerprint32: function(input) {
-    verifyString(input);
-    return farmhash.Fingerprint32(input);
+    if (typeof input === 'string') {
+      return farmhash.Fingerprint32String(input);
+    }
+    if (Buffer.isBuffer(input)) {
+      return farmhash.Fingerprint32Buffer(input);
+    }
+    throw new Error('Expected a String or Buffer for input');
   },
   fingerprint64: function(input) {
-    verifyString(input);
-    return farmhash.Fingerprint64(input);
+    if (typeof input === 'string') {
+      return farmhash.Fingerprint64String(input);
+    }
+    if (Buffer.isBuffer(input)) {
+      return farmhash.Fingerprint64Buffer(input);
+    }
   }
-
 };

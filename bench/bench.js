@@ -120,47 +120,63 @@ var randomStringOfLength = function(length) {
   console.log('Test key length performance');
 
   var seed = randomInteger();
+  var seed2 = randomInteger();
   console.log('Using seed ' + seed);
 
-  [100, 1000, 10000].forEach(function(length) {
+    [100, 1000, 10000].forEach(function(length) {
 
     var input = randomStringOfLength(length);
     var inputBuffer = new Buffer(input); // xxhash
     console.log('Using key of length ' + length);
 
     (new Benchmark.Suite())
-    .add('murmurhash3', function() {
-      murmurhash3.murmur32Sync(input);
-    })
-    .add('murmurhash3+seed', function() {
-      murmurhash3.murmur32Sync(input, seed);
-    })
-    .add('farmhash-hash-switch-string', function() {
+    // .add('murmurhash3', function() {
+    //   murmurhash3.murmur32Sync(input);
+    // })
+    // .add('murmurhash3+seed', function() {
+    //   murmurhash3.murmur32Sync(input, seed);
+    // })
+    .add('farmhash-hash32-string', function() {
       farmhash.hash32(input);
     })
-    .add('farmhash-hash-switch-buffer', function() {
+    .add('farmhash-hash32-buffer', function() {
       farmhash.hash32(inputBuffer);
     })
-    .add('farmhash-hash-buffer-only', function() {
-      farmhash.hash32Buffer(inputBuffer);
-    })
-    .add('farmhash-hash-string-only', function() {
-      farmhash.hash32String(input);
-    })
-    .add('farmhash-hash+seed-switch-string', function() {
+    .add('farmhash-hash32+seed-string', function() {
       farmhash.hash32WithSeed(input, seed);
     })
-    .add('farmhash-hash+seed-switch-buffer', function() {
+    .add('farmhash-hash32+seed-buffer', function() {
       farmhash.hash32WithSeed(inputBuffer, seed);
     })
-    .add('farmhash-hash+seed-string-only', function() {
-      farmhash.hash32WithSeedString(input, seed);
-    })
-    .add('farmhash-hash+seed-buffer-only', function() {
-      farmhash.hash32WithSeedBuffer(inputBuffer, seed);
-    })
-    .add('farmhash-fingerprint', function() {
+    .add('farmhash-fingerprint32-string', function() {
       farmhash.fingerprint32(input);
+    })
+    .add('farmhash-fingerprint32-buffer', function() {
+      farmhash.fingerprint32(inputBuffer);
+    })
+    .add('farmhash-fingerprint64-string', function() {
+      farmhash.fingerprint64(input);
+    })
+    .add('farmhash-fingerprint64-buffer', function() {
+      farmhash.fingerprint64(inputBuffer);
+    })
+    .add('farmhash-hash64-string', function() {
+      farmhash.hash64(input);
+    })
+    .add('farmhash-hash64-buffer', function() {
+      farmhash.hash64(inputBuffer);
+    })
+    .add('farmhash-hash64+seed-string', function() {
+      farmhash.hash64WithSeed(input, seed);
+    })
+    .add('farmhash-hash64+seed-buffer', function() {
+      farmhash.hash64WithSeed(inputBuffer, seed);
+    })
+    .add('farmhash-hash64+seeds-string', function() {
+      farmhash.hash64WithSeeds(input, seed, seed2);
+    })
+    .add('farmhash-hash64+seeds-buffer', function() {
+      farmhash.hash64WithSeeds(inputBuffer, seed, seed2);
     })
     .add('xxhash+seed', function() {
       xxhash.hash(inputBuffer, seed);
