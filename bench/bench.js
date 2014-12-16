@@ -128,19 +128,44 @@ var randomStringOfLength = function(length) {
     var inputBuffer = new Buffer(input); // xxhash
     console.log('Using key of length ' + length);
 
-    (new Benchmark.Suite()).add('murmurhash3', function() {
+    (new Benchmark.Suite())
+    .add('murmurhash3', function() {
       murmurhash3.murmur32Sync(input);
-    }).add('murmurhash3+seed', function() {
+    })
+    .add('murmurhash3+seed', function() {
       murmurhash3.murmur32Sync(input, seed);
-    }).add('farmhash-hash', function() {
+    })
+    .add('farmhash-hash-switch-string', function() {
       farmhash.hash32(input);
-    }).add('farmhash-hash+seed', function() {
+    })
+    .add('farmhash-hash-switch-buffer', function() {
+      farmhash.hash32(inputBuffer);
+    })
+    .add('farmhash-hash-buffer-only', function() {
+      farmhash.hash32Buffer(inputBuffer);
+    })
+    .add('farmhash-hash-string-only', function() {
+      farmhash.hash32String(input);
+    })
+    .add('farmhash-hash+seed-switch-string', function() {
       farmhash.hash32WithSeed(input, seed);
-    }).add('farmhash-fingerprint', function() {
+    })
+    .add('farmhash-hash+seed-switch-buffer', function() {
+      farmhash.hash32WithSeed(inputBuffer, seed);
+    })
+    .add('farmhash-hash+seed-string-only', function() {
+      farmhash.hash32WithSeedString(input, seed);
+    })
+    .add('farmhash-hash+seed-buffer-only', function() {
+      farmhash.hash32WithSeedBuffer(inputBuffer, seed);
+    })
+    .add('farmhash-fingerprint', function() {
       farmhash.fingerprint32(input);
-    }).add('xxhash+seed', function() {
+    })
+    .add('xxhash+seed', function() {
       xxhash.hash(inputBuffer, seed);
-    }).on('cycle', function(event) {
+    })
+    .on('cycle', function(event) {
       console.log(String(event.target));
     }).run();
 

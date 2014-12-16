@@ -6,6 +6,7 @@
 
 using namespace std;
 using namespace v8;
+using namespace node;
 using namespace util;
 
 // Convert uint64_t to string via stream
@@ -20,6 +21,29 @@ string Uint64ToString(const T& t) {
 
 NAN_METHOD(Hash32) {
   NanScope();
+
+  string input;
+
+  if (Buffer::HasInstance(args[0])) {
+    Local<Object> buffer_obj = args[0]->ToObject();
+    input = string(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj));
+  } else {
+    input = *String::Utf8Value(args[0]->ToString());
+  }
+
+  uint32_t hash = Hash32(input);
+  NanReturnValue(NanNew<Uint32>(hash));
+}
+
+NAN_METHOD(Hash32Buffer) {
+  NanScope();
+  Local<Object> buffer_obj = args[0]->ToObject();
+  uint32_t hash = Hash32(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj));
+  NanReturnValue(NanNew<Uint32>(hash));
+}
+
+NAN_METHOD(Hash32String) {
+  NanScope();
   string input = *String::Utf8Value(args[0]->ToString());
   uint32_t hash = Hash32(input);
   NanReturnValue(NanNew<Uint32>(hash));
@@ -27,9 +51,34 @@ NAN_METHOD(Hash32) {
 
 NAN_METHOD(Hash32WithSeed) {
   NanScope();
+
+  string input;
+
+  if (Buffer::HasInstance(args[0])) {
+    Local<Object> buffer_obj = args[0]->ToObject();
+    input = string(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj));
+  } else {
+    input = *String::Utf8Value(args[0]->ToString());
+  }
+
+  uint32_t seed = args[1]->Uint32Value();
+  uint32_t hash = Hash32WithSeed(input, seed);
+  NanReturnValue(NanNew<Uint32>(hash));
+}
+
+NAN_METHOD(Hash32WithSeedString) {
+  NanScope();
   string input = *String::Utf8Value(args[0]->ToString());
   uint32_t seed = args[1]->Uint32Value();
   uint32_t hash = Hash32WithSeed(input, seed);
+  NanReturnValue(NanNew<Uint32>(hash));
+}
+
+NAN_METHOD(Hash32WithSeedBuffer) {
+  NanScope();
+  Local<Object> buffer_obj = args[0]->ToObject();
+  uint32_t seed = args[1]->Uint32Value();
+  uint32_t hash = Hash32WithSeed(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj), seed);
   NanReturnValue(NanNew<Uint32>(hash));
 }
 
@@ -78,7 +127,11 @@ NAN_METHOD(Fingerprint64) {
 extern "C" void init(Handle<Object> target) {
   NanScope();
   NODE_SET_METHOD(target, "Hash32", Hash32);
+  NODE_SET_METHOD(target, "Hash32Buffer", Hash32Buffer);
+  NODE_SET_METHOD(target, "Hash32String", Hash32String);
   NODE_SET_METHOD(target, "Hash32WithSeed", Hash32WithSeed);
+  NODE_SET_METHOD(target, "Hash32WithSeedString", Hash32WithSeedString);
+  NODE_SET_METHOD(target, "Hash32WithSeedBuffer", Hash32WithSeedBuffer);
   NODE_SET_METHOD(target, "Hash64", Hash64);
   NODE_SET_METHOD(target, "Hash64WithSeed", Hash64);
   NODE_SET_METHOD(target, "Hash64WithSeeds", Hash64);
