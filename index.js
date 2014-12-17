@@ -4,25 +4,9 @@
 var farmhash = require('./build/Release/farmhash');
 
 // Input validation
-
-var verifyString = function(input) {
-  if (typeof input !== 'string') {
-    throw new Error('Expected a string for input');
-  }
-};
-var verifyStringOrBuffer = function(input) {
-  if (typeof input !== 'string' && !Buffer.isBuffer(input)) {
-    throw new Error('Expected a String of Buffer for input');
-  }
-};
 var verifyInteger = function(input) {
   if (typeof input !== 'number' || (input % 1) !== 0) {
     throw new Error('Expected an integer for seed');
-  }
-};
-var verifyBuffer = function(input) {
-  if (! Buffer.isBuffer(input)) {
-    throw new Error('Expected a Buffer for input');
   }
 };
 
@@ -56,7 +40,6 @@ module.exports = {
       return farmhash.Hash64Buffer(input);
     }
     throw new Error('Expected a String or Buffer for input');
-    return farmhash.Hash64(input);
   },
   hash64WithSeed: function(input, seed) {
     verifyInteger(seed);

@@ -26,7 +26,7 @@ console.log(typeof hash); // 'number'
 ```
 
 ```javascript
-var hash = farmhash.hash64('test');
+var hash = farmhash.hash64(new Buffer('test'));
 console.log(typeof hash); // 'string'
 ```
 
@@ -36,7 +36,7 @@ console.log(typeof hash); // 'string'
 ```
 
 ```javascript
-var hash = farmhash.fingerprint32('test');
+var hash = farmhash.fingerprint32(new Buffer('test'));
 console.log(typeof hash); // 'number'
 ```
 
@@ -53,33 +53,33 @@ The hash methods are platform dependent. Different CPU architectures, for exampl
 
 #### hash32(input)
 
-* `input` is the String to hash.
+* `input` is the Buffer or String to hash.
 
 Returns a Number containing the 32-bit unsigned integer hash value of `input`.
 
 #### hash32WithSeed(input, seed)
 
-* `input` is the String to hash.
+* `input` is the Buffer or String to hash.
 * `seed` is an integer Number to use as a seed.
 
 Returns a Number containing the 32-bit unsigned integer hash value of `input`.
 
 #### hash64(input)
 
-* `input` is the String to hash.
+* `input` is the Buffer or String to hash.
 
 Returns a String representing the 64-bit unsigned integer hash value of `input`.
 
 #### hash64WithSeed(input, seed)
 
-* `input` is the String to hash.
+* `input` is the Buffer or String to hash.
 * `seed` is an integer Number to use as a seed.
 
 Returns a String representing the 64-bit unsigned integer hash value of `input`.
 
 #### hash64WithSeeds(input, seed1, seed2)
 
-* `input` is the String to hash.
+* `input` is the Buffer or String to hash.
 * `seed1` and `seed2` are integer Numbers to use as seeds.
 
 Returns a String representing the 64-bit unsigned integer hash value of `input`.
@@ -90,13 +90,13 @@ The fingerprint methods are platform independent, producing the same results for
 
 #### fingerprint32(input)
 
-* `input` is the String to fingerprint.
+* `input` is the Buffer or String to fingerprint.
 
 Returns a Number containing the 32-bit unsigned integer fingerprint value of `input`.
 
 #### fingerprint64(input)
 
-* `input` is the String to fingerprint.
+* `input` is the Buffer or String to fingerprint.
 
 Returns a String representing the 64-bit unsigned integer fingerprint value of `input`.
 
@@ -110,7 +110,7 @@ npm test
 
 ## Licence
 
-Copyright 2014 Lovell Fuller
+Copyright 2014 Lovell Fuller and contributors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

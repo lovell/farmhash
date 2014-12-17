@@ -1,7 +1,10 @@
 {
   "name": "farmhash",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "author": "Lovell Fuller <npm@lovell.info>",
+  "contributors": [
+    "Matt Ranney  <mjr@ranney.com>"
+  ],
   "description": "Node.js implementation of FarmHash, Google's family of high performance hash functions for strings",
   "scripts": {
     "test": "node test/unit"
