@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "author": "Lovell Fuller <npm@lovell.info>",
   "contributors": [
-    "Matt Ranney  <mjr@ranney.com>"
+    "Matt Ranney  <mjr@ranney.com>",
+    "Jonas Hermsmeier <jhermsmeier@gmail.com> (https://jhermsmeier.de)"
   ],
   "description": "Node.js implementation of FarmHash, Google's family of high performance hash functions for strings",
   "scripts": {
