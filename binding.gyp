@@ -19,9 +19,9 @@
     'conditions': [
       [ 'OS=="win"', {
         'defines': [
-          'FARMHASH_OPTIONAL_BUILTIN_EXPECT',
-        ],
-      }],
+          'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
+        ]
+      }]
     ],
     'xcode_settings': {
       'OTHER_CPLUSPLUSFLAGS': [
