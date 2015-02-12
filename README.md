@@ -6,7 +6,7 @@ FarmHash is the successor to CityHash. Functions in the FarmHash family are not 
 
 As the V8 JavaScript engine only natively supports 32-bit unsigned integers, the 64-bit methods return String objects instead of Numbers and the 128-bit methods are not implemented.
 
-This module has been compiled and tested with Node.js v0.10.x (stable) and v0.11.x (unstable) on Linux, OS X and Windows.
+This module has been compiled and tested with Node.js v0.10, v0.12 and io.js v1.2.0 on Linux, OS X and Windows.
 
 ## Installation
 
