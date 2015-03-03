@@ -1,6 +1,6 @@
 {
   "name": "farmhash",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "author": "Lovell Fuller <npm@lovell.info>",
   "contributors": [
     "Matt Ranney  <mjr@ranney.com>",
@@ -23,7 +23,7 @@
     "fingerprint"
   ],
   "dependencies": {
-    "nan": "^1.6.2"
+    "nan": "^1.7.0"
   },
   "license": "Apache 2.0",
   "engines": {
