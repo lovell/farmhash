@@ -1,0 +1,8 @@
+node_modules
+test
+bench
+.jshintignore
+.jshintrc
+.gitignore
+.travis.yml
+appveyor.yml
