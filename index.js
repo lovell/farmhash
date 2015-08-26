@@ -80,5 +80,6 @@ module.exports = {
     if (Buffer.isBuffer(input)) {
       return farmhash.Fingerprint64Buffer(input);
     }
+    throw new Error('Expected a String or Buffer for input');
   }
 };

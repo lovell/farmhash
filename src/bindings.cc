@@ -4,15 +4,10 @@
 #include "nan.h"
 #include "upstream/farmhash.h"
 
-using namespace std;
-using namespace v8;
-using namespace node;
-using namespace util;
-
 // Convert uint64_t to string via stream
 template <typename T>
-string Uint64ToString(const T& t) {
-  ostringstream ss;
+std::string Uint64ToString(const T& t) {
+  std::ostringstream ss;
   ss << t;
   return ss.str();
 }
@@ -20,131 +15,144 @@ string Uint64ToString(const T& t) {
 // Hash methods - platform dependent
 
 NAN_METHOD(Hash32Buffer) {
-  NanScope();
-  Local<Object> buffer_obj = args[0]->ToObject();
-  uint32_t hash = Hash32(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj));
-  NanReturnValue(NanNew<Uint32>(hash));
+  Nan::HandleScope();
+  v8::Local<v8::Object> buffer = info[0].As<v8::Object>();
+  uint32_t hash = util::Hash32(node::Buffer::Data(buffer), node::Buffer::Length(buffer));
+  info.GetReturnValue().Set(hash);
 }
 
 NAN_METHOD(Hash32String) {
-  NanScope();
-  string input = *String::Utf8Value(args[0]->ToString());
-  uint32_t hash = Hash32(input);
-  NanReturnValue(NanNew<Uint32>(hash));
+  Nan::HandleScope();
+  std::string input = *Nan::Utf8String(info[0]);
+  uint32_t hash = util::Hash32(input);
+  info.GetReturnValue().Set(hash);
 }
 
 NAN_METHOD(Hash32WithSeedBuffer) {
-  NanScope();
-  Local<Object> buffer_obj = args[0]->ToObject();
-  uint32_t seed = args[1]->Uint32Value();
-  uint32_t hash = Hash32WithSeed(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj), seed);
-  NanReturnValue(NanNew<Uint32>(hash));
+  Nan::HandleScope();
+  v8::Local<v8::Object> buffer = info[0].As<v8::Object>();
+  uint32_t seed = Nan::To<uint32_t>(info[1]).FromJust();
+  uint32_t hash = util::Hash32WithSeed(node::Buffer::Data(buffer), node::Buffer::Length(buffer), seed);
+  info.GetReturnValue().Set(hash);
 }
 
 NAN_METHOD(Hash32WithSeedString) {
-  NanScope();
-  string input = *String::Utf8Value(args[0]->ToString());
-  uint32_t seed = args[1]->Uint32Value();
-  uint32_t hash = Hash32WithSeed(input, seed);
-  NanReturnValue(NanNew<Uint32>(hash));
+  Nan::HandleScope();
+  std::string input = *Nan::Utf8String(info[0]);
+  uint32_t seed = Nan::To<uint32_t>(info[1]).FromJust();
+  uint32_t hash = util::Hash32WithSeed(input, seed);
+  info.GetReturnValue().Set(hash);
 }
 
 NAN_METHOD(Hash64Buffer) {
-  NanScope();
-  Local<Object> buffer_obj = args[0]->ToObject();
-  uint64_t hash = Hash64(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj));
-  NanReturnValue(NanNew<String>(Uint64ToString(hash)));
+  Nan::HandleScope();
+  v8::Local<v8::Object> buffer = info[0].As<v8::Object>();
+  uint64_t hash = util::Hash64(node::Buffer::Data(buffer), node::Buffer::Length(buffer));
+  info.GetReturnValue().Set(Nan::New(Uint64ToString(hash)).ToLocalChecked());
 }
 
 NAN_METHOD(Hash64String) {
-  NanScope();
-  string input = *String::Utf8Value(args[0]->ToString());
-  uint64_t hash = Hash64(input);
-  NanReturnValue(NanNew<String>(Uint64ToString(hash)));
+  Nan::HandleScope();
+  std::string input = *Nan::Utf8String(info[0]);
+  uint64_t hash = util::Hash64(input);
+  info.GetReturnValue().Set(Nan::New(Uint64ToString(hash)).ToLocalChecked());
 }
 
 NAN_METHOD(Hash64WithSeedBuffer) {
-  NanScope();
-  Local<Object> buffer_obj = args[0]->ToObject();
-  uint64_t seed = args[1]->IntegerValue();
-  uint64_t hash = Hash64WithSeed(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj), seed);
-  NanReturnValue(NanNew<String>(Uint64ToString(hash)));
+  Nan::HandleScope();
+  v8::Local<v8::Object> buffer = info[0].As<v8::Object>();
+  uint64_t seed = static_cast<uint64_t>(Nan::To<uint32_t>(info[1]).FromJust());
+  uint64_t hash = util::Hash64WithSeed(node::Buffer::Data(buffer), node::Buffer::Length(buffer), seed);
+  info.GetReturnValue().Set(Nan::New(Uint64ToString(hash)).ToLocalChecked());
 }
 
 NAN_METHOD(Hash64WithSeedString) {
-  NanScope();
-  string input = *String::Utf8Value(args[0]->ToString());
-  uint64_t seed = args[1]->IntegerValue();
-  uint64_t hash = Hash64WithSeed(input, seed);
-  NanReturnValue(NanNew<String>(Uint64ToString(hash)));
+  Nan::HandleScope();
+  std::string input = *Nan::Utf8String(info[0]);
+  uint64_t seed = static_cast<uint64_t>(Nan::To<uint32_t>(info[1]).FromJust());
+  uint64_t hash = util::Hash64WithSeed(input, seed);
+  info.GetReturnValue().Set(Nan::New(Uint64ToString(hash)).ToLocalChecked());
 }
 
 NAN_METHOD(Hash64WithSeedsBuffer) {
-  NanScope();
-  Local<Object> buffer_obj = args[0]->ToObject();
-  uint64_t seed1 = args[1]->IntegerValue();
-  uint64_t seed2 = args[2]->IntegerValue();
-  uint64_t hash = Hash64WithSeeds(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj), seed1, seed2);
-  NanReturnValue(NanNew<String>(Uint64ToString(hash)));
+  Nan::HandleScope();
+  v8::Local<v8::Object> buffer = info[0].As<v8::Object>();
+  uint64_t seed1 = static_cast<uint64_t>(Nan::To<uint32_t>(info[1]).FromJust());
+  uint64_t seed2 = static_cast<uint64_t>(Nan::To<uint32_t>(info[2]).FromJust());
+  uint64_t hash = util::Hash64WithSeeds(node::Buffer::Data(buffer), node::Buffer::Length(buffer), seed1, seed2);
+  info.GetReturnValue().Set(Nan::New(Uint64ToString(hash)).ToLocalChecked());
 }
 
 NAN_METHOD(Hash64WithSeedsString) {
-  NanScope();
-  string input = *String::Utf8Value(args[0]->ToString());
-  uint64_t seed1 = args[1]->IntegerValue();
-  uint64_t seed2 = args[2]->IntegerValue();
-  uint64_t hash = Hash64WithSeeds(input, seed1, seed2);
-  NanReturnValue(NanNew<String>(Uint64ToString(hash)));
+  Nan::HandleScope();
+  std::string input = *Nan::Utf8String(info[0]);
+  uint64_t seed1 = static_cast<uint64_t>(Nan::To<uint32_t>(info[1]).FromJust());
+  uint64_t seed2 = static_cast<uint64_t>(Nan::To<uint32_t>(info[2]).FromJust());
+  uint64_t hash = util::Hash64WithSeeds(input, seed1, seed2);
+  info.GetReturnValue().Set(Nan::New(Uint64ToString(hash)).ToLocalChecked());
 }
 
 // Fingerprint methods - platform independent
 
 NAN_METHOD(Fingerprint32Buffer) {
-  NanScope();
-  Local<Object> buffer_obj = args[0]->ToObject();
-  uint32_t hash = Fingerprint32(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj));
-  NanReturnValue(NanNew<Uint32>(hash));
+  Nan::HandleScope();
+  v8::Local<v8::Object> buffer = info[0].As<v8::Object>();
+  uint32_t hash = util::Fingerprint32(node::Buffer::Data(buffer), node::Buffer::Length(buffer));
+  info.GetReturnValue().Set(hash);
 }
 
 NAN_METHOD(Fingerprint32String) {
-  NanScope();
-  string input = *String::Utf8Value(args[0]->ToString());
-  uint32_t hash = Fingerprint32(input);
-  NanReturnValue(NanNew<Uint32>(hash));
+  Nan::HandleScope();
+  std::string input = *Nan::Utf8String(info[0]);
+  uint32_t hash = util::Fingerprint32(input);
+  info.GetReturnValue().Set(hash);
 }
 
 NAN_METHOD(Fingerprint64Buffer) {
-  NanScope();
-  Local<Object> buffer_obj = args[0]->ToObject();
-  uint64_t hash = Fingerprint64(Buffer::Data(buffer_obj), Buffer::Length(buffer_obj));
-  NanReturnValue(NanNew<String>(Uint64ToString(hash)));
+  Nan::HandleScope();
+  v8::Local<v8::Object> buffer = info[0].As<v8::Object>();
+  uint64_t hash = util::Fingerprint64(node::Buffer::Data(buffer), node::Buffer::Length(buffer));
+  info.GetReturnValue().Set(Nan::New(Uint64ToString(hash)).ToLocalChecked());
 }
 
 NAN_METHOD(Fingerprint64String) {
-  NanScope();
-  string input = *String::Utf8Value(args[0]->ToString());
-  uint64_t hash = Fingerprint64(input);
-  NanReturnValue(NanNew<String>(Uint64ToString(hash)));
+  Nan::HandleScope();
+  std::string input = *Nan::Utf8String(info[0]);
+  uint64_t hash = util::Fingerprint64(input);
+  info.GetReturnValue().Set(Nan::New(Uint64ToString(hash)).ToLocalChecked());
 }
 
 // Init
 
-extern "C" void init(Handle<Object> target) {
-  NanScope();
-  NODE_SET_METHOD(target, "Hash32Buffer", Hash32Buffer);
-  NODE_SET_METHOD(target, "Hash32String", Hash32String);
-  NODE_SET_METHOD(target, "Hash32WithSeedBuffer", Hash32WithSeedBuffer);
-  NODE_SET_METHOD(target, "Hash32WithSeedString", Hash32WithSeedString);
-  NODE_SET_METHOD(target, "Hash64Buffer", Hash64Buffer);
-  NODE_SET_METHOD(target, "Hash64String", Hash64String);
-  NODE_SET_METHOD(target, "Hash64WithSeedBuffer", Hash64WithSeedBuffer);
-  NODE_SET_METHOD(target, "Hash64WithSeedString", Hash64WithSeedString);
-  NODE_SET_METHOD(target, "Hash64WithSeedsBuffer", Hash64WithSeedsBuffer);
-  NODE_SET_METHOD(target, "Hash64WithSeedsString", Hash64WithSeedsString);
-  NODE_SET_METHOD(target, "Fingerprint32Buffer", Fingerprint32Buffer);
-  NODE_SET_METHOD(target, "Fingerprint32String", Fingerprint32String);
-  NODE_SET_METHOD(target, "Fingerprint64Buffer", Fingerprint64Buffer);
-  NODE_SET_METHOD(target, "Fingerprint64String", Fingerprint64String);
+NAN_MODULE_INIT(init) {
+  Nan::Set(target, Nan::New("Hash32Buffer").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Hash32Buffer)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Hash32String").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Hash32String)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Hash32WithSeedBuffer").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Hash32WithSeedBuffer)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Hash32WithSeedString").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Hash32WithSeedString)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Hash64Buffer").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Hash64Buffer)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Hash64String").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Hash64String)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Hash64WithSeedBuffer").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Hash64WithSeedBuffer)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Hash64WithSeedString").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Hash64WithSeedString)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Hash64WithSeedsBuffer").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Hash64WithSeedsBuffer)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Hash64WithSeedsString").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Hash64WithSeedsString)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Fingerprint32Buffer").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Fingerprint32Buffer)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Fingerprint32String").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Fingerprint32String)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Fingerprint64Buffer").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Fingerprint64Buffer)).ToLocalChecked());
+  Nan::Set(target, Nan::New("Fingerprint64String").ToLocalChecked(),
+    Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Fingerprint64String)).ToLocalChecked());
 }
 
 NODE_MODULE(farmhash, init)

@@ -1,18 +1,21 @@
 # farmhash
 
-Node.js implementation of Google's [FarmHash](https://code.google.com/p/farmhash/) family of very fast hash functions.
+Node.js implementation of Google's [FarmHash](https://github.com/google/farmhash) family of very fast hash functions.
 
-FarmHash is the successor to CityHash. Functions in the FarmHash family are not suitable for cryptography.
+FarmHash is the successor to CityHash.
+Functions in the FarmHash family are not suitable for cryptography.
 
-As the V8 JavaScript engine only natively supports 32-bit unsigned integers, the 64-bit methods return String objects instead of Numbers and the 128-bit methods are not implemented.
+As the V8 JavaScript engine only natively supports 32-bit unsigned integers,
+the 64-bit methods return String objects instead of Numbers
+and the 128-bit methods are not implemented.
 
 This module uses FarmHash v1.1.0 (2015-03-01).
-It has been tested with Node.js v0.10, v0.12 and io.js v1.x, v2.x
+It has been tested with Node.js v0.10, v0.12 and io.js v2.x, v3.x
 on Linux, OS X and Windows.
 
 ## Installation
 
-```
+```sh
 npm install farmhash
 ```
 
@@ -106,7 +109,9 @@ Returns a String representing the 64-bit unsigned integer fingerprint value of `
 
 [![Build Status](https://travis-ci.org/lovell/farmhash.png?branch=master)](https://travis-ci.org/lovell/farmhash)
 
-```
+[![Build status](https://ci.appveyor.com/api/projects/status/es9kgsucfhmg8j0l)](https://ci.appveyor.com/project/lovell/farmhash)
+
+```sh
 npm test
 ```
 
