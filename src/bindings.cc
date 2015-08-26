@@ -18,14 +18,14 @@ NAN_METHOD(Hash32Buffer) {
   Nan::HandleScope();
   v8::Local<v8::Object> buffer = info[0].As<v8::Object>();
   uint32_t hash = util::Hash32(node::Buffer::Data(buffer), node::Buffer::Length(buffer));
-  info.GetReturnValue().Set(hash);
+  info.GetReturnValue().Set(Nan::New<v8::Uint32>(hash));
 }
 
 NAN_METHOD(Hash32String) {
   Nan::HandleScope();
   std::string input = *Nan::Utf8String(info[0]);
   uint32_t hash = util::Hash32(input);
-  info.GetReturnValue().Set(hash);
+  info.GetReturnValue().Set(Nan::New<v8::Uint32>(hash));
 }
 
 NAN_METHOD(Hash32WithSeedBuffer) {
@@ -33,7 +33,7 @@ NAN_METHOD(Hash32WithSeedBuffer) {
   v8::Local<v8::Object> buffer = info[0].As<v8::Object>();
   uint32_t seed = Nan::To<uint32_t>(info[1]).FromJust();
   uint32_t hash = util::Hash32WithSeed(node::Buffer::Data(buffer), node::Buffer::Length(buffer), seed);
-  info.GetReturnValue().Set(hash);
+  info.GetReturnValue().Set(Nan::New<v8::Uint32>(hash));
 }
 
 NAN_METHOD(Hash32WithSeedString) {
@@ -41,7 +41,7 @@ NAN_METHOD(Hash32WithSeedString) {
   std::string input = *Nan::Utf8String(info[0]);
   uint32_t seed = Nan::To<uint32_t>(info[1]).FromJust();
   uint32_t hash = util::Hash32WithSeed(input, seed);
-  info.GetReturnValue().Set(hash);
+  info.GetReturnValue().Set(Nan::New<v8::Uint32>(hash));
 }
 
 NAN_METHOD(Hash64Buffer) {
@@ -98,14 +98,14 @@ NAN_METHOD(Fingerprint32Buffer) {
   Nan::HandleScope();
   v8::Local<v8::Object> buffer = info[0].As<v8::Object>();
   uint32_t hash = util::Fingerprint32(node::Buffer::Data(buffer), node::Buffer::Length(buffer));
-  info.GetReturnValue().Set(hash);
+  info.GetReturnValue().Set(Nan::New<v8::Uint32>(hash));
 }
 
 NAN_METHOD(Fingerprint32String) {
   Nan::HandleScope();
   std::string input = *Nan::Utf8String(info[0]);
   uint32_t hash = util::Fingerprint32(input);
-  info.GetReturnValue().Set(hash);
+  info.GetReturnValue().Set(Nan::New<v8::Uint32>(hash));
 }
 
 NAN_METHOD(Fingerprint64Buffer) {

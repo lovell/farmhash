@@ -31,6 +31,15 @@
         '-Ofast',
         '-funroll-loops'
       ]
+    },
+    'configurations': {
+      'Release': {
+        'msvs_settings': {
+          'VCCLCompilerTool': {
+            'ExceptionHandling': 1,
+          }
+        }
+      }
     }
   }]
 }
