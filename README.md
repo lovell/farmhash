@@ -10,7 +10,7 @@ the 64-bit methods return String objects instead of Numbers
 and the 128-bit methods are not implemented.
 
 This module uses FarmHash v1.1.0 (2015-03-01).
-It has been tested with Node.js v0.10, v0.12 and io.js v2.x, v3.x
+It has been tested with Node.js v0.10, v0.12, v4 and io.js v2, v3
 on Linux, OS X and Windows.
 
 ## Installation

@@ -4,6 +4,7 @@ node_js:
   - "0.12"
   - "iojs-v2"
   - "iojs-v3"
+  - "4"
 env:
   - CXX=g++-4.8
 addons:
