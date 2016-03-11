@@ -1,12 +1,12 @@
 {
   "name": "farmhash",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "Lovell Fuller <npm@lovell.info>",
   "contributors": [
     "Matt Ranney  <mjr@ranney.com>",
     "Jonas Hermsmeier <jhermsmeier@gmail.com> (https://jhermsmeier.de)"
   ],
-  "description": "Node.js implementation of FarmHash, Google's family of high performance hash functions for strings",
+  "description": "Node.js implementation of FarmHash, Google's family of very fast hash functions",
   "scripts": {
     "test": "node test/unit"
   },
@@ -23,7 +23,7 @@
     "fingerprint"
   ],
   "dependencies": {
-    "nan": "^2.0.5"
+    "nan": "^2.2.0"
   },
   "license": "Apache-2.0",
   "engines": {

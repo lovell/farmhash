@@ -1,16 +1,20 @@
 # farmhash
 
-Node.js implementation of Google's [FarmHash](https://github.com/google/farmhash) family of very fast hash functions.
+Node.js implementation of Google's
+[FarmHash](https://github.com/google/farmhash)
+family of very fast hash functions.
 
 FarmHash is the successor to CityHash.
 Functions in the FarmHash family are not suitable for cryptography.
+A fast, cryptographically-secure alternative is
+[HighwayHash](https://github.com/lovell/highwayhash).
 
 As the V8 JavaScript engine only natively supports 32-bit unsigned integers,
-the 64-bit methods return String objects instead of Numbers
+the 64-bit methods return strings instead of Numbers
 and the 128-bit methods are not implemented.
 
 This module uses FarmHash v1.1.0 (2015-03-01).
-It has been tested with Node.js v0.10, v0.12, v4 and io.js v2, v3
+It has been tested with Node.js v0.10, v0.12, v4, v5
 on Linux, OS X and Windows.
 
 ## Installation
@@ -54,7 +58,9 @@ console.log(typeof hash); // 'string'
 
 ### Hash
 
-The hash methods are platform dependent. Different CPU architectures, for example 32-bit vs 64-bit, Intel vs ARM, might produce different results for a given input.
+The hash methods are platform dependent.
+Different CPU architectures, for example 32-bit vs 64-bit, Intel vs ARM, SSE4.2 vs AVX
+might produce different results for a given input.
 
 #### hash32(input)
 
@@ -117,12 +123,13 @@ npm test
 
 ## Licence
 
-Copyright 2014, 2015 Lovell Fuller and contributors.
+Copyright 2014, 2015, 2016 Lovell Fuller and contributors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+     http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
