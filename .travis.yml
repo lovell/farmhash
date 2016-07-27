@@ -7,8 +7,6 @@ node_js:
 os:
   - linux
   - osx
-env:
-  - CXX=g++-4.8
 addons:
   apt:
     sources:
