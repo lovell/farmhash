@@ -142,6 +142,12 @@ var randomStringOfLength = function(length) {
     .add('farmhash-hash32-buffer', function() {
       farmhash.hash32(inputBuffer);
     })
+    .add('farmhash-hash32v1-string', function() {
+      farmhash.hash32v1(input);
+    })
+    .add('farmhash-hash32v1-buffer', function() {
+      farmhash.hash32v1(inputBuffer);
+    })
     .add('farmhash-hash32+seed-string', function() {
       farmhash.hash32WithSeed(input, seed);
     })

@@ -3,7 +3,10 @@ node_js:
   - "0.10"
   - "0.12"
   - "4"
-  - "5"
+  - "6"
+os:
+  - linux
+  - osx
 env:
   - CXX=g++-4.8
 addons:
@@ -13,3 +16,6 @@ addons:
     packages:
     - g++-4.8
 sudo: false
+osx_image: xcode8
+before_install:
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CXX=g++-4.8; fi

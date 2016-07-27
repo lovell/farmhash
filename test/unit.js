@@ -77,6 +77,18 @@ assert.throws(function() {
 assert.throws(function() {
   farmhash.hash64WithSeeds(seed, seed, seed);
 });
+
+// hash32v1
+var hash32v1 = farmhash.hash32v1(input);
+assert.strictEqual('number', typeof hash32v1);
+assert.strictEqual(true, hash32v1 > 0);
+// hash32v1 - invalid
+assert.throws(function() {
+  farmhash.hash32v1(seed);
+})
+// hash32v1 !== hash32
+assert.notStrictEqual(hash32, hash32v1);
+
 // fingerprint32 - valid
 var fingerprint32 = farmhash.fingerprint32(input);
 assert.strictEqual('number', typeof fingerprint32);

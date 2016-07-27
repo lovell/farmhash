@@ -2,6 +2,7 @@
 'use strict';
 
 var farmhash = require('./build/Release/farmhash');
+var farmhashLegacy = require('./build/Release/farmhash-legacy');
 
 // Input validation
 var verifyInteger = function(input) {
@@ -59,6 +60,16 @@ module.exports = {
     }
     if (Buffer.isBuffer(input)) {
       return farmhash.Hash64WithSeedsBuffer(input, seed1, seed2);
+    }
+    throw new Error('Expected a String or Buffer for input');
+  },
+  // v1 (legacy) implementation of platform dependent hash32
+  hash32v1: function(input) {
+    if (typeof input === 'string') {
+      return farmhashLegacy.Hash32String(input);
+    }
+    if (Buffer.isBuffer(input)) {
+      return farmhashLegacy.Hash32Buffer(input);
     }
     throw new Error('Expected a String or Buffer for input');
   },

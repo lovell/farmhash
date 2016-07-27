@@ -14,7 +14,7 @@ the 64-bit methods return strings instead of Numbers
 and the 128-bit methods are not implemented.
 
 This module uses FarmHash v1.1.0 (2015-03-01).
-It has been tested with Node.js v0.10, v0.12, v4, v5
+It has been tested with Node.js v0.10, v0.12, v4, v6
 on Linux, OS X and Windows.
 
 ## Installation
@@ -94,6 +94,14 @@ Returns a String representing the 64-bit unsigned integer hash value of `input`.
 * `seed1` and `seed2` are integer Numbers to use as seeds.
 
 Returns a String representing the 64-bit unsigned integer hash value of `input`.
+
+#### hash32v1(input)
+
+Legacy function to access v1 of the FarmHash implementation.
+
+* `input` is the Buffer or String to hash.
+
+Returns a Number containing the 32-bit unsigned integer v1 hash value of `input`.
 
 ### Fingerprint
 
