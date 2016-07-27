@@ -85,9 +85,7 @@ assert.strictEqual(true, hash32v1 > 0);
 // hash32v1 - invalid
 assert.throws(function() {
   farmhash.hash32v1(seed);
-})
-// hash32v1 !== hash32
-assert.notStrictEqual(hash32, hash32v1);
+});
 
 // fingerprint32 - valid
 var fingerprint32 = farmhash.fingerprint32(input);

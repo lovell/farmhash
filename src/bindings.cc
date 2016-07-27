@@ -155,4 +155,8 @@ NAN_MODULE_INIT(init) {
     Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Fingerprint64String)).ToLocalChecked());
 }
 
+#ifdef FARMHASH_LEGACY
+NODE_MODULE(farmhash_legacy, init)
+#else
 NODE_MODULE(farmhash, init)
+#endif

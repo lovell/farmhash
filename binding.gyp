@@ -43,6 +43,9 @@
     }
   }, {
     'target_name': 'farmhash-legacy',
+    'defines': [
+      'FARMHASH_LEGACY'
+    ],
     'sources': [
        'src/upstream/farmhash-legacy.cc',
        'src/bindings.cc'
