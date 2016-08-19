@@ -1,7 +1,4 @@
 {
-  'variables' : {
-    'march': '<!(node -e "console.log(process.env.FARMHASH_NOMARCH?\\"\\":\\"-march=native\\")")',
-    },
   'targets': [{
     'target_name': 'farmhash',
     'sources': [
@@ -24,6 +21,10 @@
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
         ]
+      }, {
+        'variables' : {
+          'march': '<!(node -e "console.log(process.env.FARMHASH_NOMARCH?\\"\\":\\"-march=native\\")")',
+        },
       }]
     ],
     'xcode_settings': {
@@ -69,6 +70,10 @@
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
         ]
+      }, {
+        'variables' : {
+          'march': '<!(node -e "console.log(process.env.FARMHASH_NOMARCH?\\"\\":\\"-march=native\\")")',
+        },
       }]
     ],
     'xcode_settings': {
