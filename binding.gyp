@@ -1,4 +1,7 @@
 {
+  'variables' : {
+    'march': '<!(node -e "console.log(process.env.FARMHASH_NOMARCH?\\"\\":\\"-march=native\\")")',
+    },
   'targets': [{
     'target_name': 'farmhash',
     'sources': [
@@ -11,10 +14,10 @@
     'cflags_cc': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
         '-flto',
-        '-funroll-loops'
+        '-funroll-loops',
+        '<@(march)',
     ],
     'conditions': [
       [ 'OS=="win"', {
@@ -27,9 +30,9 @@
       'OTHER_CPLUSPLUSFLAGS': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
-        '-funroll-loops'
+        '-funroll-loops',
+        '<@(march)',
       ]
     },
     'configurations': {
@@ -56,10 +59,10 @@
     'cflags_cc': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
         '-flto',
-        '-funroll-loops'
+        '-funroll-loops',
+        '<@(march)',
     ],
     'conditions': [
       [ 'OS=="win"', {
@@ -72,9 +75,9 @@
       'OTHER_CPLUSPLUSFLAGS': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
-        '-funroll-loops'
+        '-funroll-loops',
+        '<@(march)',
       ]
     },
     'configurations': {
