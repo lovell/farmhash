@@ -21,9 +21,9 @@
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
         ]
-      }, {
+      }, {  # OS != "win"
         'variables' : {
-          'march': '<!(node -e "console.log(process.env.FARMHASH_NOMARCH?\\"\\":\\"-march=native\\")")',
+          'march': '<!(test -z "${FARMHASH_NOMARCH:-}" && echo -march=native || :)'
         },
       }]
     ],
@@ -70,9 +70,9 @@
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
         ]
-      }, {
+      }, {  # OS != "win"
         'variables' : {
-          'march': '<!(node -e "console.log(process.env.FARMHASH_NOMARCH?\\"\\":\\"-march=native\\")")',
+          'march': '<!(test -z "${FARMHASH_NOMARCH:-}" && echo -march=native || :)'
         },
       }]
     ],
