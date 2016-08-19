@@ -11,25 +11,29 @@
     'cflags_cc': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
         '-flto',
-        '-funroll-loops'
+        '-funroll-loops',
+        '<@(march)',
     ],
     'conditions': [
       [ 'OS=="win"', {
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
         ]
+      }, {  # OS != "win"
+        'variables' : {
+          'march': '<!(test -z "${FARMHASH_NOMARCH:-}" && echo -march=native || :)'
+        },
       }]
     ],
     'xcode_settings': {
       'OTHER_CPLUSPLUSFLAGS': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
-        '-funroll-loops'
+        '-funroll-loops',
+        '<@(march)',
       ]
     },
     'configurations': {
@@ -56,25 +60,29 @@
     'cflags_cc': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
         '-flto',
-        '-funroll-loops'
+        '-funroll-loops',
+        '<@(march)',
     ],
     'conditions': [
       [ 'OS=="win"', {
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
         ]
+      }, {  # OS != "win"
+        'variables' : {
+          'march': '<!(test -z "${FARMHASH_NOMARCH:-}" && echo -march=native || :)'
+        },
       }]
     ],
     'xcode_settings': {
       'OTHER_CPLUSPLUSFLAGS': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
-        '-funroll-loops'
+        '-funroll-loops',
+        '<@(march)',
       ]
     },
     'configurations': {

@@ -7,6 +7,9 @@ node_js:
 os:
   - linux
   - osx
+env:
+  - FARMHASH_NOMARCH=y
+  - FARMHASH_NOMARCH=
 addons:
   apt:
     sources:
