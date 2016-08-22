@@ -1,4 +1,7 @@
 {
+  'variables': {
+    'farmhash_arch%': 'native'
+  },
   'targets': [{
     'target_name': 'farmhash',
     'sources': [
@@ -11,7 +14,7 @@
     'cflags_cc': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
+        '-march=<(farmhash_arch)',
         '-Ofast',
         '-flto',
         '-funroll-loops'
@@ -27,7 +30,7 @@
       'OTHER_CPLUSPLUSFLAGS': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
+        '-march=<(farmhash_arch)',
         '-Ofast',
         '-funroll-loops'
       ]
@@ -56,7 +59,7 @@
     'cflags_cc': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
+        '-march=<(farmhash_arch)',
         '-Ofast',
         '-flto',
         '-funroll-loops'
@@ -72,7 +75,7 @@
       'OTHER_CPLUSPLUSFLAGS': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
+        '-march=<(farmhash_arch)',
         '-Ofast',
         '-funroll-loops'
       ]
