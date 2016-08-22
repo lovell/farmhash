@@ -23,6 +23,17 @@ on Linux, OS X and Windows.
 npm install farmhash
 ```
 
+Flag `-march=native` is passed to C compiler by default, which can be
+problematic if CPU of the build host is not the same as CPU of where the code
+is executed (will cause `115 Illegal instruction` during startup).
+
+You can specify another machine architecture during `npm install` phase:
+
+    npm install farmhash --farmhash-arch=core2
+
+Note that disabling compiler optimizations will cause performance impact.
+Measure first.
+
 ## Usage
 
 ```javascript
