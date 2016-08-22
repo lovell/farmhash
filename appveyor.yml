@@ -18,6 +18,7 @@ environment:
     nodejs_arch: "x64"
 install:
   - ps: Install-Product node $env:nodejs_version $env:nodejs_arch
+  - npm install -g npm
   - npm install
 test_script:
   - npm test
