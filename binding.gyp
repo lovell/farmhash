@@ -11,15 +11,19 @@
     'cflags_cc': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
         '-flto',
         '-funroll-loops'
     ],
     'conditions': [
-      [ 'OS=="win"', {
+      ['OS=="win"', {
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
+        ]
+      }],
+      ['target_arch!="arm"', {
+        'cflags_cc': [
+          '-march=native'
         ]
       }]
     ],
@@ -56,15 +60,19 @@
     'cflags_cc': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
         '-flto',
         '-funroll-loops'
     ],
     'conditions': [
-      [ 'OS=="win"', {
+      ['OS=="win"', {
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
+        ]
+      }],
+      ['target_arch!="arm"', {
+        'cflags_cc': [
+          '-march=native'
         ]
       }]
     ],
