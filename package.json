@@ -8,7 +8,8 @@
   ],
   "description": "Node.js implementation of FarmHash, Google's family of very fast hash functions",
   "scripts": {
-    "test": "semistandard && node test/unit"
+    "install": "prebuild-install || node-gyp rebuild",
+    "test": "semistandard && cc && node test/unit && prebuild-ci"
   },
   "main": "index.js",
   "repository": {
@@ -23,13 +24,24 @@
     "fingerprint"
   ],
   "dependencies": {
-    "nan": "^2.6.2"
+    "nan": "^2.6.2",
+    "prebuild-install": "^2.1.2"
   },
   "devDependencies": {
+    "cc": "^1.0.1",
+    "prebuild": "^6.2.0",
+    "prebuild-ci": "^2.2.2",
     "semistandard": "^11.0.0"
   },
   "license": "Apache-2.0",
   "engines": {
     "node": ">=4.5.0"
+  },
+  "cc": {
+    "linelength": "120",
+    "ignore": [
+      "node_modules",
+      "src/upstream"
+    ]
   }
 }
