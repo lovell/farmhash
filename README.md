@@ -14,7 +14,7 @@ the 64-bit methods return strings instead of Numbers
 and the 128-bit methods are not implemented.
 
 This module uses FarmHash v1.1.0 (2015-03-01).
-It has been tested with Node.js v0.10, v0.12, v4, v6
+It has been tested with Node.js v4, v6, v8
 on Linux, OS X and Windows.
 
 ## Installation
@@ -26,31 +26,31 @@ npm install farmhash
 ## Usage
 
 ```javascript
-var farmhash = require('farmhash');
+const farmhash = require('farmhash');
 ```
 
 ```javascript
-var hash = farmhash.hash32('test');
+const hash = farmhash.hash32('test');
 console.log(typeof hash); // 'number'
 ```
 
 ```javascript
-var hash = farmhash.hash64(new Buffer('test'));
+const hash = farmhash.hash64(new Buffer('test'));
 console.log(typeof hash); // 'string'
 ```
 
 ```javascript
-var hash = farmhash.hash64WithSeed('test', 123);
+const hash = farmhash.hash64WithSeed('test', 123);
 console.log(typeof hash); // 'string'
 ```
 
 ```javascript
-var hash = farmhash.fingerprint32(new Buffer('test'));
+const hash = farmhash.fingerprint32(new Buffer('test'));
 console.log(typeof hash); // 'number'
 ```
 
 ```javascript
-var hash = farmhash.fingerprint64('test');
+const hash = farmhash.fingerprint64('test');
 console.log(typeof hash); // 'string'
 ```
 
@@ -95,14 +95,6 @@ Returns a String representing the 64-bit unsigned integer hash value of `input`.
 
 Returns a String representing the 64-bit unsigned integer hash value of `input`.
 
-#### hash32v1(input)
-
-Legacy function to access v1 of the FarmHash implementation.
-
-* `input` is the Buffer or String to hash.
-
-Returns a Number containing the 32-bit unsigned integer v1 hash value of `input`.
-
 ### Fingerprint
 
 The fingerprint methods are platform independent, producing the same results for a given input on any machine.
@@ -131,7 +123,7 @@ npm test
 
 ## Licence
 
-Copyright 2014, 2015, 2016 Lovell Fuller and contributors.
+Copyright 2014, 2015, 2016, 2017 Lovell Fuller and contributors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -145,7 +137,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Copyright 2014, 2015 Google, Inc.
+Copyright 2014, 2015, 2016, 2017 Google, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

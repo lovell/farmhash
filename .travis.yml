@@ -1,19 +1,24 @@
 language: node_js
-node_js:
-  - "0.10"
-  - "0.12"
-  - "4"
-  - "6"
-os:
-  - linux
-  - osx
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.8
-sudo: false
-osx_image: xcode8
-before_install:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CXX=g++-4.8; fi
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: false
+      node_js: "4"
+    - os: linux
+      dist: trusty
+      sudo: false
+      node_js: "6"
+    - os: linux
+      dist: trusty
+      sudo: false
+      node_js: "8"
+    - os: osx
+      osx_image: xcode8.3
+      node_js: "4"
+    - os: osx
+      osx_image: xcode8.3
+      node_js: "6"
+    - os: osx
+      osx_image: xcode8.3
+      node_js: "8"

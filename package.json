@@ -1,6 +1,6 @@
 {
   "name": "farmhash",
-  "version": "1.2.1",
+  "version": "2.0.0-alpha",
   "author": "Lovell Fuller <npm@lovell.info>",
   "contributors": [
     "Matt Ranney  <mjr@ranney.com>",
@@ -8,7 +8,7 @@
   ],
   "description": "Node.js implementation of FarmHash, Google's family of very fast hash functions",
   "scripts": {
-    "test": "node test/unit"
+    "test": "semistandard && node test/unit"
   },
   "main": "index.js",
   "repository": {
@@ -23,10 +23,13 @@
     "fingerprint"
   ],
   "dependencies": {
-    "nan": "^2.4.0"
+    "nan": "^2.6.2"
+  },
+  "devDependencies": {
+    "semistandard": "^11.0.0"
   },
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=0.10"
+    "node": ">=4.5.0"
   }
 }
