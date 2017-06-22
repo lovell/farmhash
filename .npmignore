@@ -1,8 +1,7 @@
 node_modules
 test
 bench
-.jshintignore
-.jshintrc
+.gitattributes
 .gitignore
 .travis.yml
 appveyor.yml
