@@ -138,7 +138,7 @@
 #define bswap_32(x) BSWAP_32(x)
 #define bswap_64(x) BSWAP_64(x)
 
-#elif defined(__FreeBSD__)
+#elif defined(__FreeBSD__) || defined(__DragonFly__)
 
 #include <sys/endian.h>
 #undef bswap_32
@@ -1787,7 +1787,7 @@ STATIC_INLINE uint128_t CityMurmur(const char *s, size_t len, uint128_t seed) {
   }
   a = HashLen16(a, c);
   b = HashLen16(d, b);
-  return uint128_t(a ^ b, HashLen16(b, a));
+  return Uint128(a ^ b, HashLen16(b, a));
 }
 
 uint128_t CityHash128WithSeed(const char *s, size_t len, uint128_t seed) {
@@ -1849,15 +1849,15 @@ uint128_t CityHash128WithSeed(const char *s, size_t len, uint128_t seed) {
   // different 56-byte-to-8-byte hashes to get a 16-byte final result.
   x = HashLen16(x, v.first);
   y = HashLen16(y + z, w.first);
-  return uint128_t(HashLen16(x + v.second, w.second) + y,
-                   HashLen16(x + w.second, y + v.second));
+  return Uint128(HashLen16(x + v.second, w.second) + y,
+                 HashLen16(x + w.second, y + v.second));
 }
 
 STATIC_INLINE uint128_t CityHash128(const char *s, size_t len) {
   return len >= 16 ?
       CityHash128WithSeed(s + 16, len - 16,
-                          uint128_t(Fetch(s), Fetch(s + 8) + k0)) :
-      CityHash128WithSeed(s, len, uint128_t(k0, k1));
+                          Uint128(Fetch(s), Fetch(s + 8) + k0)) :
+      CityHash128WithSeed(s, len, Uint128(k0, k1));
 }
 
 uint128_t Fingerprint128(const char* s, size_t len) {
@@ -3571,11 +3571,7 @@ cout << farmhashcc::Hash32(data + offset, len) << "u," << endl;
 
 }  // namespace farmhashccTest
 
-#if TESTING
-
-static int farmhashccTestResult = farmhashccTest::RunTest();
-
-#else
+#if !TESTING
 int main(int argc, char** argv) {
   Setup();
   cout << "uint32_t expected[] = {\n";
@@ -4467,11 +4463,7 @@ cout << farmhashmk::Hash32(data + offset, len) << "u," << endl;
 
 }  // namespace farmhashmkTest
 
-#if TESTING
-
-static int farmhashmkTestResult = farmhashmkTest::RunTest();
-
-#else
+#if !TESTING
 int main(int argc, char** argv) {
   Setup();
   cout << "uint32_t expected[] = {\n";
@@ -5727,11 +5719,7 @@ void Dump(int offset, int len) {
 
 }  // namespace farmhashnaTest
 
-#if TESTING
-
-static int farmhashnaTestResult = farmhashnaTest::RunTest();
-
-#else
+#if !TESTING
 int main(int argc, char** argv) {
   Setup();
   cout << "uint32_t expected[] = {\n";
@@ -6623,11 +6611,7 @@ cout << farmhashnt::Hash32(data + offset, len) << "u," << endl;
 
 }  // namespace farmhashntTest
 
-#if TESTING
-
-static int farmhashntTestResult = farmhashntTest::RunTest();
-
-#else
+#if !TESTING
 int main(int argc, char** argv) {
   Setup();
   cout << "uint32_t expected[] = {\n";
@@ -7519,11 +7503,7 @@ cout << farmhashsa::Hash32(data + offset, len) << "u," << endl;
 
 }  // namespace farmhashsaTest
 
-#if TESTING
-
-static int farmhashsaTestResult = farmhashsaTest::RunTest();
-
-#else
+#if !TESTING
 int main(int argc, char** argv) {
   Setup();
   cout << "uint32_t expected[] = {\n";
@@ -8415,11 +8395,7 @@ cout << farmhashsu::Hash32(data + offset, len) << "u," << endl;
 
 }  // namespace farmhashsuTest
 
-#if TESTING
-
-static int farmhashsuTestResult = farmhashsuTest::RunTest();
-
-#else
+#if !TESTING
 int main(int argc, char** argv) {
   Setup();
   cout << "uint32_t expected[] = {\n";
@@ -9675,11 +9651,7 @@ void Dump(int offset, int len) {
 
 }  // namespace farmhashteTest
 
-#if TESTING
-
-static int farmhashteTestResult = farmhashteTest::RunTest();
-
-#else
+#if !TESTING
 int main(int argc, char** argv) {
   Setup();
   cout << "uint32_t expected[] = {\n";
@@ -10571,11 +10543,7 @@ void Dump(int offset, int len) {
 
 }  // namespace farmhashuoTest
 
-#if TESTING
-
-static int farmhashuoTestResult = farmhashuoTest::RunTest();
-
-#else
+#if !TESTING
 int main(int argc, char** argv) {
   Setup();
   cout << "uint32_t expected[] = {\n";
@@ -11831,11 +11799,7 @@ void Dump(int offset, int len) {
 
 }  // namespace farmhashxoTest
 
-#if TESTING
-
-static int farmhashxoTestResult = farmhashxoTest::RunTest();
-
-#else
+#if !TESTING
 int main(int argc, char** argv) {
   Setup();
   cout << "uint32_t expected[] = {\n";
@@ -11850,5 +11814,18 @@ int main(int argc, char** argv) {
   cout << "};\n";
 }
 #endif
+
+int main() {
+  farmhashccTest::RunTest();
+  farmhashmkTest::RunTest();
+  farmhashnaTest::RunTest();
+  farmhashntTest::RunTest();
+  farmhashsaTest::RunTest();
+  farmhashsuTest::RunTest();
+  farmhashteTest::RunTest();
+  farmhashuoTest::RunTest();
+  farmhashxoTest::RunTest();
+  __builtin_unreachable();
+}
 
 #endif  // FARMHASHSELFTEST

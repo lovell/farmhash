@@ -56,6 +56,11 @@
 namespace NAMESPACE_FOR_HASH_FUNCTIONS {
 
 #if defined(FARMHASH_UINT128_T_DEFINED)
+#if defined(__clang__)
+#if !defined(uint128_t)
+#define uint128_t __uint128_t
+#endif
+#endif
 inline uint64_t Uint128Low64(const uint128_t x) {
   return static_cast<uint64_t>(x);
 }
@@ -91,7 +96,6 @@ uint32_t Hash32(const char* s, size_t len);
 // depending on NDEBUG.
 uint32_t Hash32WithSeed(const char* s, size_t len, uint32_t seed);
 
-// Hash 128 input bits down to 64 bits of output.
 // Hash function for a byte array.
 // May change from time to time, may differ on different platforms, may differ
 // depending on NDEBUG.
@@ -123,6 +127,7 @@ uint128_t Hash128WithSeed(const char* s, size_t len, uint128_t seed);
 
 // BASIC NON-STRING HASHING
 
+// Hash 128 input bits down to 64 bits of output.
 // This is intended to be a reasonably good hash function.
 // May change from time to time, may differ on different platforms, may differ
 // depending on NDEBUG.
@@ -286,5 +291,25 @@ inline uint128_t Fingerprint128(const Str& s) {
 #endif
 
 }  // namespace NAMESPACE_FOR_HASH_FUNCTIONS
+
+/* gently define FARMHASH_BIG_ENDIAN when detected big-endian machine */
+#if defined(__BIG_ENDIAN__)
+  #if !defined(FARMHASH_BIG_ENDIAN)
+    #define FARMHASH_BIG_ENDIAN
+  #endif
+#elif defined(__LITTLE_ENDIAN)
+  // nothing for little-endian
+#else
+  #include <endian.h> // libc6-dev, GLIBC
+  #if defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)
+    #if !defined(FARMHASH_BIG_ENDIAN)
+      #define FARMHASH_BIG_ENDIAN
+    #endif
+  #elif defined(__BYTE_ORDER) && (__BYTE_ORDER == __LITTLE_ENDIAN)
+    // nothing for little-endian
+  #else
+    #error "Unable to determine endianness!"
+  #endif /* __BYTE_ORDER__ */
+#endif /* __BIG_ENDIAN__ */
 
 #endif  // FARM_HASH_H_
