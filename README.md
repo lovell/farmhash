@@ -17,6 +17,8 @@ This module uses FarmHash v1.1.0 (2015-03-01).
 It has been tested with Node.js v4, v6, v8
 on Linux, OS X and Windows.
 
+Pre-compiled binaries are provided for the most common platforms.
+
 ## Installation
 
 ```sh
