@@ -41,6 +41,7 @@
         'msvs_settings': {
           'VCCLCompilerTool': {
             'ExceptionHandling': 1,
+            'DisableSpecificWarnings': ['4244', '4307', '4319']
           }
         }
       }
