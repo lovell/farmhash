@@ -22,3 +22,6 @@ matrix:
     - os: osx
       osx_image: xcode8.3
       node_js: "8"
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sysctl -a | grep machdep.cpu; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat /proc/cpuinfo; fi
