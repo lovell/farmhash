@@ -1,7 +1,8 @@
-node_modules
-test
-bench
 .gitattributes
 .gitignore
 .travis.yml
 appveyor.yml
+bench
+build
+node_modules
+test
