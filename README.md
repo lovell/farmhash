@@ -26,6 +26,10 @@ Use the `npm install --build-from-source` flag to compile for other platforms.
 npm install farmhash
 ```
 
+```sh
+yarn add farmhash
+```
+
 ## Usage
 
 ```javascript

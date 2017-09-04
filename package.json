@@ -1,6 +1,6 @@
 {
   "name": "farmhash",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Lovell Fuller <npm@lovell.info>",
   "contributors": [
     "Matt Ranney  <mjr@ranney.com>",
@@ -8,8 +8,8 @@
   ],
   "description": "Node.js implementation of FarmHash, Google's family of very fast hash functions",
   "scripts": {
-    "install": "prebuild-install || node-gyp rebuild",
-    "test": "semistandard && cc && node test/unit && prebuild-ci"
+    "install": "detect-libc prebuild-install || node-gyp rebuild",
+    "test": "semistandard && cc && node test/unit && detect-libc prebuild-ci"
   },
   "main": "index.js",
   "repository": {
@@ -24,13 +24,14 @@
     "fingerprint"
   ],
   "dependencies": {
-    "nan": "^2.6.2",
-    "prebuild-install": "^2.1.2"
+    "detect-libc": "^0.2.0",
+    "nan": "^2.7.0",
+    "prebuild-install": "^2.2.2"
   },
   "devDependencies": {
     "cc": "^1.0.1",
-    "prebuild": "^6.2.0",
-    "prebuild-ci": "^2.2.2",
+    "prebuild": "^6.2.1",
+    "prebuild-ci": "^2.2.3",
     "semistandard": "^11.0.0"
   },
   "license": "Apache-2.0",
