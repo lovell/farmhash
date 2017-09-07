@@ -12,13 +12,17 @@
         '-fexceptions',
         '-Wall',
         '-Ofast',
-        '-flto',
         '-funroll-loops'
     ],
     'conditions': [
       ['OS=="win"', {
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
+        ]
+      }],
+      ['OS=="linux"', {
+        'cflags_cc': [
+          '-flto',
         ]
       }],
       ['target_arch!="arm"', {
