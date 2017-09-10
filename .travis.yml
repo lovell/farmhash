@@ -25,3 +25,5 @@ matrix:
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sysctl -a | grep machdep.cpu; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat /proc/cpuinfo; fi
+env:
+  - CXXFLAGS="-march=corei7"
