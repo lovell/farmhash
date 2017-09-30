@@ -24,7 +24,7 @@ matrix:
       node_js: "8"
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sysctl -a | grep machdep.cpu; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat /proc/cpuinfo; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat /proc/cpuinfo; gcc -march=native -E -v - </dev/null 2>&1 | grep cc1; fi
 env:
   global:
-    - CXXFLAGS="-march=corei7 -mno-avx"
+    - CXXFLAGS="-march=corei7 -mno-avx -mno-aes -mno-f16c"
