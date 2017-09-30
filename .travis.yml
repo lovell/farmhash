@@ -27,4 +27,4 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat /proc/cpuinfo; fi
 env:
   global:
-    - CXXFLAGS="-march=corei7"
+    - CXXFLAGS="-march=corei7 -mno-avx"
