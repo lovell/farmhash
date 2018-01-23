@@ -13,6 +13,10 @@ matrix:
       dist: trusty
       sudo: false
       node_js: "8"
+    - os: linux
+      dist: trusty
+      sudo: false
+      node_js: "9"
     - os: osx
       osx_image: xcode8.3
       node_js: "4"
@@ -22,9 +26,9 @@ matrix:
     - os: osx
       osx_image: xcode8.3
       node_js: "8"
-before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sysctl -a | grep machdep.cpu; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat /proc/cpuinfo; gcc -march=native -E -v - </dev/null 2>&1 | grep cc1; fi
+    - os: osx
+      osx_image: xcode8.3
+      node_js: "9"
 env:
   global:
     - CXXFLAGS="-march=corei7 -mno-avx -mno-aes -mno-f16c"
