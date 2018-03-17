@@ -24,8 +24,8 @@
     "fingerprint"
   ],
   "dependencies": {
-    "nan": "^2.10.0",
-    "prebuild-install": "^2.5.3"
+    "prebuild-install": "^2.5.3",
+    "node-addon-api": "^1.2.0"
   },
   "devDependencies": {
     "cc": "^1.0.2",
