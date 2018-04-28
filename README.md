@@ -14,7 +14,7 @@ the 64-bit methods return strings instead of Numbers
 and the 128-bit methods are not implemented.
 
 This module uses FarmHash v1.1.0 (2015-03-01).
-It has been tested with Node.js 4, 6, 8 and 9
+It has been tested with Node.js 4, 6, 8 and 10
 on Linux, OS X and Windows.
 
 Pre-compiled binaries are provided for CPUs with SSE4.2 intrinsics.
