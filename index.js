@@ -1,6 +1,6 @@
 'use strict';
 
-const farmhash = require('./build/Release/farmhash');
+const farmhash = require('./build/Release/farmhash.node');
 
 // Input validation
 function verifyInteger (input) {
