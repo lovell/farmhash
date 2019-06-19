@@ -1,6 +1,7 @@
 .gitattributes
 .gitignore
 .travis.yml
+.vscode
 appveyor.yml
 bench
 build

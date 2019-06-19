@@ -1,34 +1,68 @@
-language: node_js
 matrix:
   include:
-    - os: linux
+    - name: "Linux (glibc) - Node 8"
+      os: linux
       dist: trusty
       sudo: false
-      node_js: "4"
-    - os: linux
-      dist: trusty
-      sudo: false
-      node_js: "6"
-    - os: linux
-      dist: trusty
-      sudo: false
+      language: node_js
       node_js: "8"
-    - os: linux
+    - name: "Linux (glibc) - Node 10"
+      os: linux
       dist: trusty
       sudo: false
+      language: node_js
       node_js: "10"
-    - os: osx
-      osx_image: xcode8.3
-      node_js: "4"
-    - os: osx
-      osx_image: xcode8.3
-      node_js: "6"
-    - os: osx
-      osx_image: xcode8.3
+    - name: "Linux (glibc) - Node 12"
+      os: linux
+      dist: trusty
+      sudo: false
+      language: node_js
+      node_js: "12"
+    - name: "Linux (musl) - Node 8"
+      os: linux
+      dist: trusty
+      sudo: true
+      language: minimal
+      before_install:
+        - sudo docker run -dit --name farmhash --env CI --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:8-alpine
+        - sudo docker exec farmhash apk add build-base git python2 --update-cache
+      install: sudo docker exec farmhash sh -c "npm install --unsafe-perm"
+      script: sudo docker exec farmhash sh -c "npm test"
+    - name: "Linux (musl) - Node 10"
+      os: linux
+      dist: trusty
+      sudo: true
+      language: minimal
+      before_install:
+        - sudo docker run -dit --name farmhash --env CI --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:10-alpine
+        - sudo docker exec farmhash apk add build-base git python2 --update-cache
+      install: sudo docker exec farmhash sh -c "npm install --unsafe-perm"
+      script: sudo docker exec farmhash sh -c "npm test"
+    - name: "Linux (musl) - Node 12"
+      os: linux
+      dist: trusty
+      sudo: true
+      language: minimal
+      before_install:
+        - sudo docker run -dit --name farmhash --env CI --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:12.0-alpine
+        - sudo docker exec farmhash apk add build-base git python2 --update-cache
+      install: sudo docker exec farmhash sh -c "npm install --unsafe-perm"
+      script: sudo docker exec farmhash sh -c "npm test"
+    - name: "OS X - Node 8"
+      os: osx
+      osx_image: xcode9.2
+      language: node_js
       node_js: "8"
-    - os: osx
-      osx_image: xcode8.3
+    - name: "OS X - Node 10"
+      os: osx
+      osx_image: xcode9.2
+      language: node_js
       node_js: "10"
+    - name: "OS X - Node 12"
+      os: osx
+      osx_image: xcode9.2
+      language: node_js
+      node_js: "12"
 env:
   global:
     - CXXFLAGS="-march=corei7 -mno-avx -mno-aes -mno-f16c"
