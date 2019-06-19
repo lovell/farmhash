@@ -92,6 +92,9 @@ const fingerprint64 = farmhash.fingerprint64(input);
 assert.strictEqual('string', typeof fingerprint64);
 assert.strictEqual('17097846426514660294', fingerprint64);
 
+// https://github.com/lovell/farmhash/issues/26
+assert.strictEqual('16905089972579912905', farmhash.fingerprint64('1footrue'));
+
 // fingerprint64 - invalid
 assert.throws(function () {
   farmhash.fingerprint64(seed);
