@@ -24,11 +24,6 @@
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
         ]
       }],
-      ['OS=="linux"', {
-        'cflags_cc': [
-          '-flto',
-        ]
-      }],
       ['target_arch=="ia32"', {
         'cflags_cc': [
           '-march=native'
