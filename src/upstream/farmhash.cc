@@ -114,7 +114,7 @@
 
 #if defined(FARMHASH_UNKNOWN_ENDIAN) || !defined(bswap_64)
 
-#ifdef _MSC_VER
+#ifdef _WIN32
 
 #undef bswap_32
 #undef bswap_64
@@ -165,10 +165,20 @@
 #define bswap_64(x) bswap64(x)
 #endif
 
+#elif defined(__HAIKU__)
+
+#define _BSD_SOURCE
+#include <bsd/endian.h>
+#undef bswap_32
+#undef bswap_64
+#define bswap_32(x) bswap32(x)
+#define bswap_64(x) bswap64(x)
+
 #else
 
 #undef bswap_32
 #undef bswap_64
+#undef _BYTESWAP_H
 #include <byteswap.h>
 
 #endif
@@ -216,7 +226,7 @@ STATIC_INLINE uint64_t BasicRotate64(uint64_t val, int shift) {
   return shift == 0 ? val : ((val >> shift) | (val << (64 - shift)));
 }
 
-#if defined(_MSC_VER) && defined(FARMHASH_ROTR)
+#if defined(_WIN32) && defined(FARMHASH_ROTR)
 
 STATIC_INLINE uint32_t Rotate32(uint32_t val, int shift) {
   return sizeof(unsigned long) == sizeof(val) ?
