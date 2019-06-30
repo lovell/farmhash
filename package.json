@@ -8,7 +8,7 @@
   ],
   "description": "Node.js implementation of FarmHash, Google's family of very fast hash functions",
   "scripts": {
-    "install": "prebuild-install || node-gyp rebuild",
+    "install": "prebuild-install --runtime napi || prebuild-install || node-gyp rebuild",
     "test": "semistandard && cc && node test/unit && prebuild-ci"
   },
   "main": "index.js",
