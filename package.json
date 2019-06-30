@@ -1,6 +1,6 @@
 {
   "name": "farmhash",
-  "version": "3.0.0",
+  "version": "3.0.0-rc1",
   "author": "Lovell Fuller <npm@lovell.info>",
   "contributors": [
     "Matt Ranney  <mjr@ranney.com>",
@@ -30,15 +30,16 @@
   "devDependencies": {
     "cc": "^1.0.2",
     "prebuild": "^9.0.0",
-    "prebuild-ci": "^3.0.0",
+    "prebuild-ci": "^3.1.0",
     "semistandard": "^13.0.1"
   },
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.10.0"
   },
   "binary": {
     "napi_versions": [
+      2,
       3,
       4
     ]
