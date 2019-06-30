@@ -1,5 +1,6 @@
 .gitattributes
 .gitignore
+.prebuildrc
 .travis.yml
 .vscode
 appveyor.yml
