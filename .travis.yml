@@ -1,11 +1,5 @@
 matrix:
   include:
-    - name: "Linux (glibc) - Node 8"
-      os: linux
-      dist: trusty
-      sudo: false
-      language: node_js
-      node_js: "8"
     - name: "Linux (glibc) - Node 10"
       os: linux
       dist: trusty
@@ -18,16 +12,6 @@ matrix:
       sudo: false
       language: node_js
       node_js: "12"
-    - name: "Linux (musl) - Node 8"
-      os: linux
-      dist: trusty
-      sudo: true
-      language: minimal
-      before_install:
-        - sudo docker run -dit --name farmhash --env CI --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:8-alpine
-        - sudo docker exec farmhash apk add build-base git python2 --update-cache
-      install: sudo docker exec farmhash sh -c "npm install --unsafe-perm"
-      script: sudo docker exec farmhash sh -c "npm test"
     - name: "Linux (musl) - Node 10"
       os: linux
       dist: trusty
@@ -48,11 +32,6 @@ matrix:
         - sudo docker exec farmhash apk add build-base git python2 --update-cache
       install: sudo docker exec farmhash sh -c "npm install --unsafe-perm"
       script: sudo docker exec farmhash sh -c "npm test"
-    - name: "OS X - Node 8"
-      os: osx
-      osx_image: xcode9.2
-      language: node_js
-      node_js: "8"
     - name: "OS X - Node 10"
       os: osx
       osx_image: xcode9.2

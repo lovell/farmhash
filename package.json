@@ -35,13 +35,11 @@
   },
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=8.10.0"
+    "node": ">=10"
   },
   "binary": {
     "napi_versions": [
-      2,
-      3,
-      4
+      3
     ]
   },
   "cc": {
