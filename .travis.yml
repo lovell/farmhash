@@ -18,12 +18,18 @@ jobs:
       language: node_js
       node_js: "14"
 
+    - name: "Linux (glibc) - Node 15"
+      os: linux
+      dist: trusty
+      language: node_js
+      node_js: "15"
+
     - name: "Linux (musl) - Node 10"
       os: linux
       dist: bionic
       language: shell
       before_install:
-        - sudo docker run -dit --name farmhash --env CI --env CXXFLAGS --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:10.17.0-alpine3.9
+        - sudo docker run -dit --name farmhash --env CI --env CXXFLAGS --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:10-alpine3.11
         - sudo docker exec farmhash apk add build-base git python2 --update-cache
       install: sudo docker exec farmhash sh -c "npm install --unsafe-perm"
       script: sudo docker exec farmhash sh -c "npm test"
@@ -33,17 +39,28 @@ jobs:
       dist: bionic
       language: shell
       before_install:
-        - sudo docker run -dit --name farmhash --env CI --env CXXFLAGS --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:12.0-alpine
+        - sudo docker run -dit --name farmhash --env CI --env CXXFLAGS --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:12-alpine3.11
         - sudo docker exec farmhash apk add build-base git python2 --update-cache
       install: sudo docker exec farmhash sh -c "npm install --unsafe-perm"
       script: sudo docker exec farmhash sh -c "npm test"
 
-    - name: "Linux (musl) - Node 12"
+    - name: "Linux (musl) - Node 14"
       os: linux
       dist: bionic
       language: shell
       before_install:
-        - sudo docker run -dit --name farmhash --env CI --env CXXFLAGS --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:14.0-alpine
+        - sudo docker run -dit --name farmhash --env CI --env CXXFLAGS --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:14-alpine3.11
+        - sudo docker exec farmhash apk add build-base git python2 --update-cache
+      install: sudo docker exec farmhash sh -c "npm install --unsafe-perm"
+      script: sudo docker exec farmhash sh -c "npm test"
+
+    - name: "Linux (musl) - Node 15"
+      os: linux
+      dist: bionic
+      language: shell
+      before_install:
+        - sudo chown 0.0 ${PWD}
+        - sudo docker run -dit --name farmhash --env CI --env CXXFLAGS --env PREBUILD_TOKEN --volume "${PWD}:/mnt/farmhash" --workdir /mnt/farmhash node:15-alpine3.11
         - sudo docker exec farmhash apk add build-base git python2 --update-cache
       install: sudo docker exec farmhash sh -c "npm install --unsafe-perm"
       script: sudo docker exec farmhash sh -c "npm test"
@@ -65,6 +82,12 @@ jobs:
       osx_image: xcode9.2
       language: node_js
       node_js: "14"
+
+    - name: "OS X - Node 15"
+      os: osx
+      osx_image: xcode9.2
+      language: node_js
+      node_js: "15"
 
 env:
   global:
