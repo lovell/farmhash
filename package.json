@@ -8,7 +8,7 @@
   ],
   "description": "Node.js implementation of FarmHash, Google's family of very fast hash functions",
   "scripts": {
-    "install": "prebuild-install --runtime napi || prebuild-install || node-gyp rebuild",
+    "install": "prebuild-install || node-gyp rebuild",
     "test": "semistandard && cpplint && node test/unit && prebuild-ci"
   },
   "main": "index.js",
@@ -24,14 +24,14 @@
     "fingerprint"
   ],
   "dependencies": {
-    "node-addon-api": "^3.0.0",
-    "prebuild-install": "^5.3.3"
+    "node-addon-api": "^3.0.2",
+    "prebuild-install": "^6.0.0"
   },
   "devDependencies": {
     "cc": "^2.0.1",
-    "prebuild": "^10.0.0",
+    "prebuild": "^10.0.1",
     "prebuild-ci": "^3.1.0",
-    "semistandard": "^14.2.0"
+    "semistandard": "^16.0.0"
   },
   "license": "Apache-2.0",
   "engines": {
@@ -41,6 +41,10 @@
     "napi_versions": [
       3
     ]
+  },
+  "config": {
+    "runtime": "napi",
+    "target": 3
   },
   "cc": {
     "linelength": "120",
