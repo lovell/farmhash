@@ -1,7 +1,7 @@
 .gitattributes
 .gitignore
 .prebuildrc
-.travis.yml
+.github/
 .vscode
 appveyor.yml
 bench
