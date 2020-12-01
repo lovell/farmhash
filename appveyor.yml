@@ -15,4 +15,4 @@ install:
 test_script:
   - npm test
 on_success:
-  - if [%prebuild%] == [true] if [%APPVEYOR_REPO_TAG_NAME%] == [true] npx prebuild --runtime napi --target 3
+  - if [%prebuild%] == [true] if [%APPVEYOR_REPO_TAG%] == [true] npx prebuild --runtime napi --target 3
