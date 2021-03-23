@@ -12,6 +12,11 @@
     "test": "semistandard && cpplint && node test/unit"
   },
   "main": "index.js",
+  "files": [
+    "binding.gyp",
+    "index.d.ts",
+    "src/"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/lovell/farmhash"
