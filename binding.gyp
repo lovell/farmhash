@@ -33,6 +33,13 @@
         'cflags_cc': [
           '-march=native'
         ]
+      }],
+      ['target_arch!="arm64"', {
+        'xcode_settings': {
+          'OTHER_CPLUSPLUSFLAGS+': [
+            '-march=native',
+          ]
+        }
       }]
     ],
     'xcode_settings': {
@@ -43,7 +50,6 @@
       'OTHER_CPLUSPLUSFLAGS': [
         '-fexceptions',
         '-Wall',
-        '-march=native',
         '-Ofast',
         '-funroll-loops'
       ]
