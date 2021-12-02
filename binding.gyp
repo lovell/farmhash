@@ -13,7 +13,7 @@
     ],
     'cflags_cc': [
       '-Wall',
-      '-Ofast',
+      '-Os',
       '-funroll-loops'
     ],
     'cflags!': [ '-fno-exceptions' ],
@@ -23,23 +23,6 @@
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
         ]
-      }],
-      ['target_arch=="ia32"', {
-        'cflags_cc': [
-          '-march=native'
-        ]
-      }],
-      ['target_arch=="x64"', {
-        'cflags_cc': [
-          '-march=native'
-        ]
-      }],
-      ['target_arch!="arm64"', {
-        'xcode_settings': {
-          'OTHER_CPLUSPLUSFLAGS+': [
-            '-march=native',
-          ]
-        }
       }]
     ],
     'xcode_settings': {
@@ -50,7 +33,7 @@
       'OTHER_CPLUSPLUSFLAGS': [
         '-fexceptions',
         '-Wall',
-        '-Ofast',
+        '-Oz',
         '-funroll-loops'
       ]
     },
@@ -59,6 +42,7 @@
         'msvs_settings': {
           'VCCLCompilerTool': {
             'ExceptionHandling': 1,
+            'Optimization': 1,
             'DisableSpecificWarnings': ['4244', '4307', '4319']
           }
         }
