@@ -29,13 +29,13 @@
     "fingerprint"
   ],
   "dependencies": {
-    "node-addon-api": "^3.1.0",
-    "prebuild-install": "^6.0.1"
+    "node-addon-api": "^4.2.0",
+    "prebuild-install": "^7.0.0"
   },
   "devDependencies": {
     "cc": "^3.0.1",
-    "prebuild": "^10.0.1",
-    "semistandard": "^16.0.0"
+    "prebuild": "^11.0.0",
+    "semistandard": "^16.0.1"
   },
   "license": "Apache-2.0",
   "engines": {
