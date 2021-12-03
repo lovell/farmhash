@@ -121,7 +121,7 @@ Returns a String representing the 64-bit unsigned integer fingerprint value of `
 
 ## Testing
 
-[![Build Status](https://travis-ci.org/lovell/farmhash.png?branch=master)](https://travis-ci.org/lovell/farmhash)
+[![Build Status](https://travis-ci.org/lovell/farmhash.png?branch=main)](https://travis-ci.org/lovell/farmhash)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/es9kgsucfhmg8j0l)](https://ci.appveyor.com/project/lovell/farmhash)
 
@@ -131,7 +131,7 @@ npm test
 
 ## Licence
 
-Copyright 2014, 2015, 2016, 2017, 2018, 2019, 2020 Lovell Fuller and contributors.
+Copyright 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 Lovell Fuller and contributors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
