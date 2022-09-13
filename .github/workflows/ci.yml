@@ -23,23 +23,30 @@ jobs:
             container: centos:7
             nodejs_version: 16
           - os: ubuntu-20.04
-            container: node:10-alpine3.11
+            container: centos:7
+            nodejs_version: 18
+          - os: ubuntu-20.04
+            container: node:10-alpine3.12
             prebuild: true
           - os: ubuntu-20.04
-            container: node:12-alpine3.11
+            container: node:12-alpine3.12
           - os: ubuntu-20.04
-            container: node:14-alpine3.11
+            container: node:14-alpine3.12
           - os: ubuntu-20.04
-            container: node:16-alpine3.11
-          - os: macos-10.15
+            container: node:16-alpine3.12
+          - os: ubuntu-20.04
+            container: node:18-alpine3.14
+          - os: macos-11
             nodejs_version: 10
             prebuild: true
-          - os: macos-10.15
+          - os: macos-11
             nodejs_version: 12
-          - os: macos-10.15
+          - os: macos-11
             nodejs_version: 14
-          - os: macos-10.15
+          - os: macos-11
             nodejs_version: 16
+          - os: macos-11
+            nodejs_version: 18
           - os: windows-2019
             nodejs_version: 10
             prebuild: true
@@ -49,22 +56,30 @@ jobs:
             nodejs_version: 14
           - os: windows-2019
             nodejs_version: 16
+          - os: windows-2019
+            nodejs_version: 18
     env:
-      CXXFLAGS: "-march=nehalem -mno-avx -mno-aes -mno-f16c"
+      CXXFLAGS: "-march=x86-64-v2 -mtune=nehalem"
     steps:
       - name: Dependencies (Linux glibc)
         if: contains(matrix.container, 'centos')
         run: |
           curl -sL https://rpm.nodesource.com/setup_${{ matrix.nodejs_version }}.x | bash -
           yum install -y centos-release-scl
-          yum install -y devtoolset-10-gcc-c++ make git python3 nodejs
-          echo "/opt/rh/devtoolset-10/root/usr/bin" >> $GITHUB_PATH
+          yum install -y devtoolset-11-gcc-c++ make git python3 nodejs
+          echo "/opt/rh/devtoolset-11/root/usr/bin" >> $GITHUB_PATH
+      - name: Dependencies (Rocky Linux glibc)
+        if: contains(matrix.container, 'rockylinux')
+        run: |
+          curl -sL https://rpm.nodesource.com/setup_${{ matrix.nodejs_version }}.x | bash -
+          dnf install -y gcc-toolset-11-gcc-c++ make git python3 nodejs fontconfig google-noto-sans-fonts
+          echo "/opt/rh/gcc-toolset-11/root/usr/bin" >> $GITHUB_PATH
       - name: Dependencies (Linux musl)
         if: contains(matrix.container, 'alpine')
         run: apk add build-base git python3 --update-cache
       - name: Dependencies (macOS, Windows)
         if: contains(matrix.os, 'macos') || contains(matrix.os, 'windows')
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.nodejs_version }}
       - name: Checkout

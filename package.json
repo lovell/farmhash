@@ -29,12 +29,12 @@
     "fingerprint"
   ],
   "dependencies": {
-    "node-addon-api": "^4.2.0",
-    "prebuild-install": "^7.0.0"
+    "node-addon-api": "^5.0.0",
+    "prebuild-install": "^7.1.1"
   },
   "devDependencies": {
     "cc": "^3.0.1",
-    "prebuild": "^11.0.0",
+    "prebuild": "^11.0.4",
     "semistandard": "^16.0.1"
   },
   "license": "Apache-2.0",
