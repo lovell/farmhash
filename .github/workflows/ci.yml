@@ -23,10 +23,10 @@ jobs:
             container: centos:7
             nodejs_version: 16
           - os: ubuntu-20.04
-            container: centos:7
+            container: rockylinux:8
             nodejs_version: 18
           - os: ubuntu-20.04
-            container: node:10-alpine3.12
+            container: node:10-alpine3.11
             prebuild: true
           - os: ubuntu-20.04
             container: node:12-alpine3.12
@@ -59,7 +59,7 @@ jobs:
           - os: windows-2019
             nodejs_version: 18
     env:
-      CXXFLAGS: "-march=x86-64-v2 -mtune=nehalem"
+      CXXFLAGS: "-march=nehalem"
     steps:
       - name: Dependencies (Linux glibc)
         if: contains(matrix.container, 'centos')
