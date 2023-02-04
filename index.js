@@ -1,6 +1,12 @@
 'use strict';
 
-const farmhash = require('./build/Release/farmhash.node');
+const farmhash = (function farmhashBinding () {
+  try {
+    return require('./build/Release/farmhash.node');
+  } catch (e) {
+    return require('./build/Debug/farmhash.node');
+  }
+}());
 
 // Input validation
 function verifyInteger (input) {
