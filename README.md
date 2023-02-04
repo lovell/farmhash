@@ -14,8 +14,8 @@ the 64-bit methods return strings instead of Numbers
 and the 128-bit methods are not implemented.
 
 This module uses FarmHash v1.1.0 (2015-03-01).
-It has been tested with Node.js 10, 12 and 14
-on Linux, OS X and Windows.
+It has been tested with Node.js 10, 12, 14, 16 and 18
+on Linux (glibc, musl), macOS (x64) and Windows (x86, x64).
 
 Pre-compiled binaries are provided for CPUs with SSE4.2 intrinsics.
 Use the `npm install --build-from-source` flag to gain performance benefits
@@ -121,17 +121,13 @@ Returns a String representing the 64-bit unsigned integer fingerprint value of `
 
 ## Testing
 
-[![Build Status](https://travis-ci.org/lovell/farmhash.png?branch=main)](https://travis-ci.org/lovell/farmhash)
-
-[![Build status](https://ci.appveyor.com/api/projects/status/es9kgsucfhmg8j0l)](https://ci.appveyor.com/project/lovell/farmhash)
-
 ```sh
 npm test
 ```
 
 ## Licence
 
-Copyright 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 Lovell Fuller and contributors.
+Copyright 2014 Lovell Fuller and contributors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
