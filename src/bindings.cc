@@ -19,78 +19,78 @@
 
 Napi::Value Hash32Buffer(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  Napi::Buffer<char> buffer = info[0].As<Napi::Buffer<char>>();
+  Napi::Buffer<char> buffer = info[size_t(0)].As<Napi::Buffer<char>>();
   uint32_t hash = util::Hash32(buffer.Data(), buffer.ByteLength());
   return Napi::Number::New(env, hash);
 }
 
 Napi::Value Hash32String(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  std::string input = info[0].As<Napi::String>().Utf8Value();
+  std::string input = info[size_t(0)].As<Napi::String>().Utf8Value();
   uint32_t hash = util::Hash32(input);
   return Napi::Number::New(env, hash);
 }
 
 Napi::Value Hash32WithSeedBuffer(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  Napi::Buffer<char> buffer = info[0].As<Napi::Buffer<char>>();
-  uint32_t seed = info[1].As<Napi::Number>().Uint32Value();
+  Napi::Buffer<char> buffer = info[size_t(0)].As<Napi::Buffer<char>>();
+  uint32_t seed = info[size_t(1)].As<Napi::Number>().Uint32Value();
   uint32_t hash = util::Hash32WithSeed(buffer.Data(), buffer.ByteLength(), seed);
   return Napi::Number::New(env, hash);
 }
 
 Napi::Value Hash32WithSeedString(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  std::string input = info[0].As<Napi::String>().Utf8Value();
-  uint32_t seed = info[1].As<Napi::Number>().Uint32Value();
+  std::string input = info[size_t(0)].As<Napi::String>().Utf8Value();
+  uint32_t seed = info[size_t(1)].As<Napi::Number>().Uint32Value();
   uint32_t hash = util::Hash32WithSeed(input, seed);
   return Napi::Number::New(env, hash);
 }
 
 Napi::Value Hash64Buffer(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  Napi::Buffer<char> buffer = info[0].As<Napi::Buffer<char>>();
+  Napi::Buffer<char> buffer = info[size_t(0)].As<Napi::Buffer<char>>();
   uint64_t hash = util::Hash64(buffer.Data(), buffer.ByteLength());
   return Napi::String::New(env, std::to_string(hash));
 }
 
 Napi::Value Hash64String(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  std::string input = info[0].As<Napi::String>().Utf8Value();
+  std::string input = info[size_t(0)].As<Napi::String>().Utf8Value();
   uint64_t hash = util::Hash64(input);
   return Napi::String::New(env, std::to_string(hash));
 }
 
 Napi::Value Hash64WithSeedBuffer(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  Napi::Buffer<char> buffer = info[0].As<Napi::Buffer<char>>();
-  uint64_t seed = static_cast<uint64_t>(info[1].As<Napi::Number>().Uint32Value());
+  Napi::Buffer<char> buffer = info[size_t(0)].As<Napi::Buffer<char>>();
+  uint64_t seed = static_cast<uint64_t>(info[size_t(1)].As<Napi::Number>().Uint32Value());
   uint64_t hash = util::Hash64WithSeed(buffer.Data(), buffer.ByteLength(), seed);
   return Napi::String::New(env, std::to_string(hash));
 }
 
 Napi::Value Hash64WithSeedString(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  std::string input = info[0].As<Napi::String>().Utf8Value();
-  uint64_t seed = static_cast<uint64_t>(info[1].As<Napi::Number>().Uint32Value());
+  std::string input = info[size_t(0)].As<Napi::String>().Utf8Value();
+  uint64_t seed = static_cast<uint64_t>(info[size_t(1)].As<Napi::Number>().Uint32Value());
   uint64_t hash = util::Hash64WithSeed(input, seed);
   return Napi::String::New(env, std::to_string(hash));
 }
 
 Napi::Value Hash64WithSeedsBuffer(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  Napi::Buffer<char> buffer = info[0].As<Napi::Buffer<char>>();
-  uint64_t seed1 = static_cast<uint64_t>(info[1].As<Napi::Number>().Uint32Value());
-  uint64_t seed2 = static_cast<uint64_t>(info[2].As<Napi::Number>().Uint32Value());
+  Napi::Buffer<char> buffer = info[size_t(0)].As<Napi::Buffer<char>>();
+  uint64_t seed1 = static_cast<uint64_t>(info[size_t(1)].As<Napi::Number>().Uint32Value());
+  uint64_t seed2 = static_cast<uint64_t>(info[size_t(2)].As<Napi::Number>().Uint32Value());
   uint64_t hash = util::Hash64WithSeeds(buffer.Data(), buffer.ByteLength(), seed1, seed2);
   return Napi::String::New(env, std::to_string(hash));
 }
 
 Napi::Value Hash64WithSeedsString(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  std::string input = info[0].As<Napi::String>().Utf8Value();
-  uint64_t seed1 = static_cast<uint64_t>(info[1].As<Napi::Number>().Uint32Value());
-  uint64_t seed2 = static_cast<uint64_t>(info[2].As<Napi::Number>().Uint32Value());
+  std::string input = info[size_t(0)].As<Napi::String>().Utf8Value();
+  uint64_t seed1 = static_cast<uint64_t>(info[size_t(1)].As<Napi::Number>().Uint32Value());
+  uint64_t seed2 = static_cast<uint64_t>(info[size_t(2)].As<Napi::Number>().Uint32Value());
   uint64_t hash = util::Hash64WithSeeds(input, seed1, seed2);
   return Napi::String::New(env, std::to_string(hash));
 }
@@ -99,28 +99,28 @@ Napi::Value Hash64WithSeedsString(const Napi::CallbackInfo& info) {
 
 Napi::Value Fingerprint32Buffer(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  Napi::Buffer<char> buffer = info[0].As<Napi::Buffer<char>>();
+  Napi::Buffer<char> buffer = info[size_t(0)].As<Napi::Buffer<char>>();
   uint32_t hash = util::Fingerprint32(buffer.Data(), buffer.ByteLength());
   return Napi::Number::New(env, hash);
 }
 
 Napi::Value Fingerprint32String(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  std::string input = info[0].As<Napi::String>().Utf8Value();
+  std::string input = info[size_t(0)].As<Napi::String>().Utf8Value();
   uint32_t hash = util::Fingerprint32(input);
   return Napi::Number::New(env, hash);
 }
 
 Napi::Value Fingerprint64Buffer(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  Napi::Buffer<char> buffer = info[0].As<Napi::Buffer<char>>();
+  Napi::Buffer<char> buffer = info[size_t(0)].As<Napi::Buffer<char>>();
   uint64_t hash = util::Fingerprint64(buffer.Data(), buffer.ByteLength());
   return Napi::String::New(env, std::to_string(hash));
 }
 
 Napi::Value Fingerprint64String(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  std::string input = info[0].As<Napi::String>().Utf8Value();
+  std::string input = info[size_t(0)].As<Napi::String>().Utf8Value();
   uint64_t hash = util::Fingerprint64(input);
   return Napi::String::New(env, std::to_string(hash));
 }
