@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "node-addon-api": "^5.1.0",
-    "prebuild-install": "^7.1.1"
+    "prebuild-install": "^7.1.2"
   },
   "devDependencies": {
     "cc": "^3.0.1",
