@@ -15,9 +15,13 @@ and the 128-bit methods are not implemented.
 
 This module uses FarmHash v1.1.0 (2015-03-01).
 It has been tested with Node.js 10, 12, 14, 16 and 18
-on Linux (glibc, musl), macOS (x64) and Windows (x86, x64).
+on Linux (glibc, musl),
+macOS (x64, arm64) and
+Windows (x86, x64).
 
-Pre-compiled binaries are provided for CPUs with SSE4.2 intrinsics.
+Pre-compiled binaries are provided for
+Intel CPUs with SSE4.2 intrinsics
+and Apple ARM64 CPUs.
 Use the `npm install --build-from-source` flag to gain performance benefits
 on more modern CPUs such as those with AVX intrinsics.
 
@@ -29,6 +33,10 @@ npm install farmhash
 
 ```sh
 yarn add farmhash
+```
+
+```sh
+pnpm add farmhash
 ```
 
 ## Usage
