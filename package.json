@@ -29,26 +29,27 @@
     "fingerprint"
   ],
   "dependencies": {
-    "node-addon-api": "^5.1.0",
+    "node-addon-api": "^8.1.0",
     "prebuild-install": "^7.1.2"
   },
   "devDependencies": {
     "cc": "^3.0.1",
-    "prebuild": "^11.0.4",
-    "semistandard": "^16.0.1"
+    "node-gyp": "^10.2.0",
+    "prebuild": "^13.0.1",
+    "semistandard": "^17.0.0"
   },
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=10"
+    "node": ">=16"
   },
   "binary": {
     "napi_versions": [
-      3
+      8
     ]
   },
   "config": {
     "runtime": "napi",
-    "target": 3
+    "target": 8
   },
   "cc": {
     "linelength": "120",
