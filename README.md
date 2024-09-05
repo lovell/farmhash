@@ -9,12 +9,12 @@ Functions in the FarmHash family are not suitable for cryptography.
 A fast, cryptographically-secure alternative is
 [HighwayHash](https://github.com/lovell/highwayhash).
 
-As the V8 JavaScript engine only natively supports 32-bit unsigned integers,
-the 64-bit methods return strings instead of Numbers
+The 32-bit methods return a `Number`,
+the 64-bit methods return a `BigInt`
 and the 128-bit methods are not implemented.
 
 This module uses FarmHash v1.1.0 (2015-03-01).
-It has been tested with Node.js 10, 12, 14, 16 and 18
+It has been tested with Node.js 16, 18, 20 and 22
 on Linux (glibc, musl),
 macOS (x64, arm64) and
 Windows (x86, x64).
@@ -52,12 +52,12 @@ console.log(typeof hash); // 'number'
 
 ```javascript
 const hash = farmhash.hash64(new Buffer('test'));
-console.log(typeof hash); // 'string'
+console.log(typeof hash); // 'bigint'
 ```
 
 ```javascript
 const hash = farmhash.hash64WithSeed('test', 123);
-console.log(typeof hash); // 'string'
+console.log(typeof hash); // 'bigint'
 ```
 
 ```javascript
@@ -67,7 +67,12 @@ console.log(typeof hash); // 'number'
 
 ```javascript
 const hash = farmhash.fingerprint64('test');
-console.log(typeof hash); // 'string'
+console.log(typeof hash); // 'bigint'
+```
+
+```javascript
+const hash = farmhash.fingerprint64signed('test');
+console.log(typeof hash); // 'bigint'
 ```
 
 ## API
@@ -80,36 +85,36 @@ might produce different results for a given input.
 
 #### hash32(input)
 
-* `input` is the Buffer or String to hash.
+* `input` is the `Buffer` or `String` to hash.
 
-Returns a Number containing the 32-bit unsigned integer hash value of `input`.
+Returns a `Number` containing the 32-bit unsigned integer hash value of `input`.
 
 #### hash32WithSeed(input, seed)
 
-* `input` is the Buffer or String to hash.
+* `input` is the `Buffer` or `String` to hash.
 * `seed` is an integer Number to use as a seed.
 
-Returns a Number containing the 32-bit unsigned integer hash value of `input`.
+Returns a `Number` containing the 32-bit unsigned integer hash value of `input`.
 
 #### hash64(input)
 
-* `input` is the Buffer or String to hash.
+* `input` is the `Buffer` or `String` to hash.
 
-Returns a String representing the 64-bit unsigned integer hash value of `input`.
+Returns a `BigInt` containing the 64-bit unsigned integer hash value of `input`.
 
 #### hash64WithSeed(input, seed)
 
-* `input` is the Buffer or String to hash.
-* `seed` is an integer Number to use as a seed.
+* `input` is the `Buffer` or `String` to hash.
+* `seed` is an integer `Number` to use as a seed.
 
-Returns a String representing the 64-bit unsigned integer hash value of `input`.
+Returns a `BigInt` containing the 64-bit unsigned integer hash value of `input`.
 
 #### hash64WithSeeds(input, seed1, seed2)
 
-* `input` is the Buffer or String to hash.
-* `seed1` and `seed2` are integer Numbers to use as seeds.
+* `input` is the `Buffer` or `String` to hash.
+* `seed1` and `seed2` are both an integer `Number` to use as seeds.
 
-Returns a String representing the 64-bit unsigned integer hash value of `input`.
+Returns a `BigInt` containing the 64-bit unsigned integer hash value of `input`.
 
 ### Fingerprint
 
@@ -117,15 +122,25 @@ The fingerprint methods are platform independent, producing the same results for
 
 #### fingerprint32(input)
 
-* `input` is the Buffer or String to fingerprint.
+* `input` is the `Buffer` or `String` to fingerprint.
 
-Returns a Number containing the 32-bit unsigned integer fingerprint value of `input`.
+Returns a `Number` containing the 32-bit unsigned integer fingerprint value of `input`.
 
 #### fingerprint64(input)
 
-* `input` is the Buffer or String to fingerprint.
+* `input` is the `Buffer` or `String` to fingerprint.
 
-Returns a String representing the 64-bit unsigned integer fingerprint value of `input`.
+Returns a `BigInt` containing the 64-bit unsigned integer fingerprint value of `input`.
+
+#### fingerprint64signed(input)
+
+* `input` is the `Buffer` or `String` to fingerprint.
+
+Returns a `BigInt` containing the 64-bit signed integer fingerprint value of `input`.
+
+This matches the signed behaviour of Google BigQuery's
+[FARM_FINGERPRINT](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#farm_fingerprint)
+function.
 
 ## Testing
 

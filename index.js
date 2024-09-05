@@ -84,5 +84,8 @@ module.exports = {
       return farmhash.Fingerprint64Buffer(input);
     }
     throw new Error('Expected a String or Buffer for input');
+  },
+  fingerprint64signed: function (input) {
+    return BigInt.asIntN(64, this.fingerprint64(input));
   }
 };

@@ -34,8 +34,8 @@ assert.throws(function () {
 
 // hash64 - valid
 const hash64 = farmhash.hash64(input);
-assert.strictEqual('string', typeof hash64);
-assert.strictEqual(true, /^[0-9]{1,20}$/.test(hash64));
+assert.strictEqual('bigint', typeof hash64);
+assert.strictEqual(true, /^[0-9]{1,20}$/.test(hash64.toString()));
 
 // hash64 - invalid
 assert.throws(function () {
@@ -44,8 +44,8 @@ assert.throws(function () {
 
 // hash64WithSeed - valid
 const hash64WithSeed = farmhash.hash64WithSeed(input, seed);
-assert.strictEqual('string', typeof hash64WithSeed);
-assert.strictEqual(true, /^[0-9]{1,20}$/.test(hash64WithSeed));
+assert.strictEqual('bigint', typeof hash64WithSeed);
+assert.strictEqual(true, /^[0-9]{1,20}$/.test(hash64WithSeed.toString()));
 
 // hash64WithSeed - invalid
 assert.throws(function () {
@@ -60,8 +60,8 @@ assert.throws(function () {
 
 // hash64WithSeeds - valid
 const hash64WithSeeds = farmhash.hash64WithSeeds(input, seed, seed);
-assert.strictEqual('string', typeof hash64WithSeeds);
-assert.strictEqual(true, /^[0-9]{1,20}$/.test(hash64WithSeeds));
+assert.strictEqual('bigint', typeof hash64WithSeeds);
+assert.strictEqual(true, /^[0-9]{1,20}$/.test(hash64WithSeeds.toString()));
 
 // hash64WithSeeds - invalid
 assert.throws(function () {
@@ -89,11 +89,12 @@ assert.throws(function () {
 
 // fingerprint64 - valid
 const fingerprint64 = farmhash.fingerprint64(input);
-assert.strictEqual('string', typeof fingerprint64);
-assert.strictEqual('17097846426514660294', fingerprint64);
+assert.strictEqual('bigint', typeof fingerprint64);
+assert.strictEqual('17097846426514660294', fingerprint64.toString());
 
 // https://github.com/lovell/farmhash/issues/26
-assert.strictEqual('16905089972579912905', farmhash.fingerprint64('1footrue'));
+assert.strictEqual('16905089972579912905', farmhash.fingerprint64('1footrue').toString());
+assert.strictEqual('-1541654101129638711', farmhash.fingerprint64signed('1footrue').toString());
 
 // fingerprint64 - invalid
 assert.throws(function () {
