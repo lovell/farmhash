@@ -25,6 +25,9 @@
         ]
       }]
     ],
+    'defines': [
+      'FARMHASH_DEBUG=0'
+    ],
     'xcode_settings': {
       'CLANG_CXX_LIBRARY': 'libc++',
       'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',
