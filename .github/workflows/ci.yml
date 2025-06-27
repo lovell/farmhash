@@ -36,17 +36,17 @@ jobs:
             container: node:20-alpine3.18
           - os: ubuntu-24.04
             container: node:22-alpine3.20
-          - os: macos-12
+          - os: macos-13
             nodejs_version: 16
             nodejs_arch: x64
             prebuild: true
-          - os: macos-12
+          - os: macos-13
             nodejs_version: 18
             nodejs_arch: x64
-          - os: macos-12
+          - os: macos-13
             nodejs_version: 20
             nodejs_arch: x64
-          - os: macos-12
+          - os: macos-13
             nodejs_version: 22
             nodejs_arch: x64
           - os: macos-14
@@ -59,30 +59,30 @@ jobs:
           - os: macos-14
             nodejs_version: 22
             nodejs_arch: arm64
-          - os: windows-2019
+          - os: windows-2022
             nodejs_version: 16
             nodejs_arch: x86
             prebuild: true
-          - os: windows-2019
+          - os: windows-2022
             nodejs_version: 18
             nodejs_arch: x86
-          - os: windows-2019
+          - os: windows-2022
             nodejs_version: 20
             nodejs_arch: x86
-          - os: windows-2019
+          - os: windows-2022
             nodejs_version: 22
             nodejs_arch: x86
-          - os: windows-2019
+          - os: windows-2022
             nodejs_version: 16
             nodejs_arch: x64
             prebuild: true
-          - os: windows-2019
+          - os: windows-2022
             nodejs_version: 18
             nodejs_arch: x64
-          - os: windows-2019
+          - os: windows-2022
             nodejs_version: 20
             nodejs_arch: x64
-          - os: windows-2019
+          - os: windows-2022
             nodejs_version: 22
             nodejs_arch: x64
     steps:
