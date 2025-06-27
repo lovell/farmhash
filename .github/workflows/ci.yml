@@ -28,6 +28,30 @@ jobs:
             container: rockylinux:8
             nodejs_version: 22
           - os: ubuntu-24.04
+            container: rockylinux:8
+            nodejs_version: 24
+          - os: ubuntu-24.04-arm
+            container: arm64v8/rockylinux:8
+            nodejs_arch: arm64
+            nodejs_version: 16
+            prebuild: true
+          - os: ubuntu-24.04-arm
+            container: arm64v8/rockylinux:8
+            nodejs_arch: arm64
+            nodejs_version: 18
+          - os: ubuntu-24.04-arm
+            container: arm64v8/rockylinux:8
+            nodejs_arch: arm64
+            nodejs_version: 20
+          - os: ubuntu-24.04-arm
+            container: arm64v8/rockylinux:8
+            nodejs_arch: arm64
+            nodejs_version: 22
+          - os: ubuntu-24.04-arm
+            container: arm64v8/rockylinux:8
+            nodejs_arch: arm64
+            nodejs_version: 24
+          - os: ubuntu-24.04
             container: node:16-alpine3.12
             prebuild: true
           - os: ubuntu-24.04
@@ -36,6 +60,8 @@ jobs:
             container: node:20-alpine3.18
           - os: ubuntu-24.04
             container: node:22-alpine3.20
+          - os: ubuntu-24.04
+            container: node:24-alpine3.20
           - os: macos-13
             nodejs_version: 16
             nodejs_arch: x64
@@ -49,6 +75,9 @@ jobs:
           - os: macos-13
             nodejs_version: 22
             nodejs_arch: x64
+          - os: macos-13
+            nodejs_version: 24
+            nodejs_arch: x64
           - os: macos-14
             nodejs_version: 18
             nodejs_arch: arm64
@@ -58,6 +87,9 @@ jobs:
             nodejs_arch: arm64
           - os: macos-14
             nodejs_version: 22
+            nodejs_arch: arm64
+          - os: macos-14
+            nodejs_version: 24
             nodejs_arch: arm64
           - os: windows-2022
             nodejs_version: 16
@@ -84,14 +116,17 @@ jobs:
             nodejs_arch: x64
           - os: windows-2022
             nodejs_version: 22
+            nodejs_arch: x64
+          - os: windows-2022
+            nodejs_version: 24
             nodejs_arch: x64
     steps:
       - name: Dependencies (Rocky Linux glibc)
         if: contains(matrix.container, 'rockylinux')
         run: |
           curl -sL https://rpm.nodesource.com/setup_${{ matrix.nodejs_version }}.x | bash -
-          dnf install -y gcc-toolset-11-gcc-c++ make git python3.12 nodejs
-          echo "/opt/rh/gcc-toolset-11/root/usr/bin" >> $GITHUB_PATH
+          dnf install -y gcc-toolset-14-gcc-c++ make git python3.12 nodejs
+          echo "/opt/rh/gcc-toolset-14/root/usr/bin" >> $GITHUB_PATH
           echo "PYTHON=/usr/bin/python3.12" >> $GITHUB_ENV
       - name: Dependencies (Linux musl)
         if: contains(matrix.container, 'alpine')
@@ -108,7 +143,7 @@ jobs:
           node-version: ${{ matrix.nodejs_version }}
           architecture: ${{ matrix.nodejs_arch }}
       - name: Add compiler flags
-        if: matrix.os != 'macos-14'
+        if: matrix.nodejs_arch != 'arm64'
         run: echo "CXXFLAGS=-march=nehalem" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v4
