@@ -120,6 +120,16 @@ jobs:
           - os: windows-2022
             nodejs_version: 24
             nodejs_arch: x64
+          - os: windows-11-arm
+            nodejs_version: 20
+            nodejs_arch: arm64
+            prebuild: true
+          - os: windows-11-arm
+            nodejs_version: 22
+            nodejs_arch: arm64
+          - os: windows-11-arm
+            nodejs_version: 24
+            nodejs_arch: arm64
     steps:
       - name: Dependencies (Rocky Linux glibc)
         if: contains(matrix.container, 'rockylinux')

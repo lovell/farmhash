@@ -14,14 +14,13 @@ the 64-bit methods return a `BigInt`
 and the 128-bit methods are not implemented.
 
 This module uses FarmHash v1.1.0 (2015-03-01).
-It has been tested with Node.js 16, 18, 20 and 22
-on Linux (glibc, musl),
-macOS (x64, arm64) and
-Windows (x86, x64).
+It has been tested with Node.js 16 to 24
+on Linux (x64, ARM64),
+macOS (x64, ARM64) and
+Windows (x86, x64, ARM64).
 
 Pre-compiled binaries are provided for
-Intel CPUs with SSE4.2 intrinsics
-and Apple ARM64 CPUs.
+Intel CPUs with SSE4.2 intrinsics and ARM64 CPUs.
 Use the `npm install --build-from-source` flag to gain performance benefits
 on more modern CPUs such as those with AVX intrinsics.
 
@@ -46,21 +45,6 @@ const farmhash = require('farmhash');
 ```
 
 ```javascript
-const hash = farmhash.hash32('test');
-console.log(typeof hash); // 'number'
-```
-
-```javascript
-const hash = farmhash.hash64(new Buffer('test'));
-console.log(typeof hash); // 'bigint'
-```
-
-```javascript
-const hash = farmhash.hash64WithSeed('test', 123);
-console.log(typeof hash); // 'bigint'
-```
-
-```javascript
 const hash = farmhash.fingerprint32(new Buffer('test'));
 console.log(typeof hash); // 'number'
 ```
@@ -75,7 +59,48 @@ const hash = farmhash.fingerprint64signed('test');
 console.log(typeof hash); // 'bigint'
 ```
 
+```javascript
+const hash = farmhash.hash32('test');
+console.log(typeof hash); // 'number'
+```
+
+```javascript
+const hash = farmhash.hash64(new Buffer('test'));
+console.log(typeof hash); // 'bigint'
+```
+
+```javascript
+const hash = farmhash.hash64WithSeed('test', 123);
+console.log(typeof hash); // 'bigint'
+```
+
 ## API
+
+### Fingerprint
+
+The fingerprint methods are platform independent, producing the same results for a given input on any machine.
+
+#### fingerprint32(input)
+
+* `input` is the `Buffer` or `String` to fingerprint.
+
+Returns a `Number` containing the 32-bit unsigned integer fingerprint value of `input`.
+
+#### fingerprint64(input)
+
+* `input` is the `Buffer` or `String` to fingerprint.
+
+Returns a `BigInt` containing the 64-bit unsigned integer fingerprint value of `input`.
+
+#### fingerprint64signed(input)
+
+* `input` is the `Buffer` or `String` to fingerprint.
+
+Returns a `BigInt` containing the 64-bit signed integer fingerprint value of `input`.
+
+This matches the signed behaviour of Google BigQuery's
+[FARM_FINGERPRINT](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#farm_fingerprint)
+function.
 
 ### Hash
 
@@ -115,32 +140,6 @@ Returns a `BigInt` containing the 64-bit unsigned integer hash value of `input`.
 * `seed1` and `seed2` are both an integer `Number` to use as seeds.
 
 Returns a `BigInt` containing the 64-bit unsigned integer hash value of `input`.
-
-### Fingerprint
-
-The fingerprint methods are platform independent, producing the same results for a given input on any machine.
-
-#### fingerprint32(input)
-
-* `input` is the `Buffer` or `String` to fingerprint.
-
-Returns a `Number` containing the 32-bit unsigned integer fingerprint value of `input`.
-
-#### fingerprint64(input)
-
-* `input` is the `Buffer` or `String` to fingerprint.
-
-Returns a `BigInt` containing the 64-bit unsigned integer fingerprint value of `input`.
-
-#### fingerprint64signed(input)
-
-* `input` is the `Buffer` or `String` to fingerprint.
-
-Returns a `BigInt` containing the 64-bit signed integer fingerprint value of `input`.
-
-This matches the signed behaviour of Google BigQuery's
-[FARM_FINGERPRINT](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#farm_fingerprint)
-function.
 
 ## Testing
 
