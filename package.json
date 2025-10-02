@@ -9,17 +9,18 @@
   "description": "Node.js implementation of FarmHash, Google's family of very fast hash functions",
   "scripts": {
     "install": "prebuild-install || node-gyp rebuild",
-    "test": "semistandard && cpplint && node test/unit && tsd"
+    "test": "semistandard && cpplint src/*.cc && node test/unit && tsd"
   },
   "main": "index.js",
   "files": [
     "binding.gyp",
     "index.d.ts",
-    "src/"
+    "src/",
+    "!src/CPPLINT.cfg"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/lovell/farmhash"
+    "url": "git://github.com/lovell/farmhash.git"
   },
   "keywords": [
     "farmhash",
@@ -29,16 +30,16 @@
     "fingerprint"
   ],
   "dependencies": {
-    "node-addon-api": "^8.4.0",
+    "node-addon-api": "^8.5.0",
     "prebuild-install": "^7.1.3"
   },
   "devDependencies": {
+    "@cpplint/cli": "^0.1.0",
     "@types/node": "*",
-    "cc": "^3.0.1",
-    "node-gyp": "^11.2.0",
+    "node-gyp": "^11.4.2",
     "prebuild": "^13.0.1",
     "semistandard": "^17.0.0",
-    "tsd": "^0.32.0"
+    "tsd": "^0.33.0"
   },
   "license": "Apache-2.0",
   "engines": {
@@ -52,12 +53,5 @@
   "config": {
     "runtime": "napi",
     "target": 8
-  },
-  "cc": {
-    "linelength": "120",
-    "ignore": [
-      "node_modules",
-      "src/upstream"
-    ]
   }
 }

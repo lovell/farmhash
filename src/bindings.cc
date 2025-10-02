@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include <napi.h>
+#include <string>
 #include "upstream/farmhash.h"
 
 // Hash methods - platform dependent
