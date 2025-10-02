@@ -1,3 +1,6 @@
+// Copyright 2014 Lovell Fuller and others.
+// SPDX-License-Identifier: Apache-2.0
+
 export function fingerprint32(input: string | Buffer): number;
 
 export function fingerprint64(input: string | Buffer): bigint;
@@ -12,4 +15,8 @@ export function hash64(input: string | Buffer): bigint;
 
 export function hash64WithSeed(input: string | Buffer, seed: number): bigint;
 
-export function hash64WithSeeds(input: string | Buffer, seed1: number, seed2: number): bigint;
+export function hash64WithSeeds(
+  input: string | Buffer,
+  seed1: number,
+  seed2: number,
+): bigint;

@@ -1,3 +1,5 @@
+// biome-ignore-all lint/correctness/noUnusedVariables: types only test file
+
 import farmhash from '.';
 
 const testString: string = 'test';
@@ -26,5 +28,13 @@ const h64b: bigint = farmhash.hash64(testBuffer);
 const h64ss: bigint = farmhash.hash64WithSeed(testString, testSeed1);
 const h64sb: bigint = farmhash.hash64WithSeed(testBuffer, testSeed1);
 
-const h64sss: bigint = farmhash.hash64WithSeeds(testString, testSeed1, testSeed2);
-const h64ssb: bigint = farmhash.hash64WithSeeds(testBuffer, testSeed1, testSeed2);
+const h64sss: bigint = farmhash.hash64WithSeeds(
+  testString,
+  testSeed1,
+  testSeed2,
+);
+const h64ssb: bigint = farmhash.hash64WithSeeds(
+  testBuffer,
+  testSeed1,
+  testSeed2,
+);
