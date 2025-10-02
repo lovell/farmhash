@@ -3,10 +3,10 @@
 
 {
   'targets': [{
-    'target_name': 'farmhash',
+    'target_name': 'farmhash-<!(node -p \"require(\'../platform\')\")',
     'sources': [
-       'src/upstream/farmhash.cc',
-       'src/bindings.cc'
+       'upstream/farmhash.cc',
+       'bindings.cc'
     ],
     'include_dirs' : [
       "<!(node -p \"require('node-addon-api').include_dir\")"
@@ -29,7 +29,8 @@
       }]
     ],
     'defines': [
-      'FARMHASH_DEBUG=0'
+      'FARMHASH_DEBUG=0',
+      'NAPI_VERSION=9'
     ],
     'xcode_settings': {
       'CLANG_CXX_LIBRARY': 'libc++',

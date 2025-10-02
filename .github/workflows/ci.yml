@@ -1,13 +1,23 @@
-name: CI (GitHub)
+name: CI
 on:
   - push
   - pull_request
 permissions: {}
 jobs:
-  CI:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - run: npm install
+      - run: npm run lint
+  build:
+    needs: lint
     permissions:
-      contents: write
-    name: ${{ matrix.container || matrix.os }} - Node.js ${{ matrix.nodejs_version }} ${{ matrix.nodejs_arch }} ${{ matrix.prebuild && '- prebuild' }}
+      contents: read
+    name: build-${{ matrix.container || matrix.os }}${{ matrix.nodejs_arch }}-node${{ matrix.nodejs_version }}
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
     strategy:
@@ -16,11 +26,8 @@ jobs:
         include:
           - os: ubuntu-24.04
             container: rockylinux:8
-            nodejs_version: 16
-            prebuild: true
-          - os: ubuntu-24.04
-            container: rockylinux:8
             nodejs_version: 18
+            package: "linux-x64"
           - os: ubuntu-24.04
             container: rockylinux:8
             nodejs_version: 20
@@ -33,12 +40,8 @@ jobs:
           - os: ubuntu-24.04-arm
             container: arm64v8/rockylinux:8
             nodejs_arch: arm64
-            nodejs_version: 16
-            prebuild: true
-          - os: ubuntu-24.04-arm
-            container: arm64v8/rockylinux:8
-            nodejs_arch: arm64
             nodejs_version: 18
+            package: "linux-arm64"
           - os: ubuntu-24.04-arm
             container: arm64v8/rockylinux:8
             nodejs_arch: arm64
@@ -52,36 +55,35 @@ jobs:
             nodejs_arch: arm64
             nodejs_version: 24
           - os: ubuntu-24.04
-            container: node:16-alpine3.12
-            prebuild: true
-          - os: ubuntu-24.04
-            container: node:18-alpine3.14
+            container: node:18-alpine3.17
+            nodejs_version: 18
+            package: "linuxmusl-x64"
           - os: ubuntu-24.04
             container: node:20-alpine3.18
+            nodejs_version: 20
           - os: ubuntu-24.04
             container: node:22-alpine3.20
+            nodejs_version: 22
           - os: ubuntu-24.04
-            container: node:24-alpine3.20
-          - os: macos-13
-            nodejs_version: 16
-            nodejs_arch: x64
-            prebuild: true
-          - os: macos-13
+            container: node:24-alpine3.22
+            nodejs_version: 24
+          - os: macos-15-intel
             nodejs_version: 18
             nodejs_arch: x64
-          - os: macos-13
+            package: "darwin-x64"
+          - os: macos-15-intel
             nodejs_version: 20
             nodejs_arch: x64
-          - os: macos-13
+          - os: macos-15-intel
             nodejs_version: 22
             nodejs_arch: x64
-          - os: macos-13
+          - os: macos-15-intel
             nodejs_version: 24
             nodejs_arch: x64
           - os: macos-14
             nodejs_version: 18
             nodejs_arch: arm64
-            prebuild: true
+            package: "darwin-arm64"
           - os: macos-14
             nodejs_version: 20
             nodejs_arch: arm64
@@ -92,12 +94,9 @@ jobs:
             nodejs_version: 24
             nodejs_arch: arm64
           - os: windows-2022
-            nodejs_version: 16
-            nodejs_arch: x86
-            prebuild: true
-          - os: windows-2022
             nodejs_version: 18
             nodejs_arch: x86
+            package: "win32-ia32"
           - os: windows-2022
             nodejs_version: 20
             nodejs_arch: x86
@@ -105,12 +104,9 @@ jobs:
             nodejs_version: 22
             nodejs_arch: x86
           - os: windows-2022
-            nodejs_version: 16
-            nodejs_arch: x64
-            prebuild: true
-          - os: windows-2022
             nodejs_version: 18
             nodejs_arch: x64
+            package: "win32-x64"
           - os: windows-2022
             nodejs_version: 20
             nodejs_arch: x64
@@ -123,7 +119,7 @@ jobs:
           - os: windows-11-arm
             nodejs_version: 20
             nodejs_arch: arm64
-            prebuild: true
+            package: "win32-arm64"
           - os: windows-11-arm
             nodejs_version: 22
             nodejs_arch: arm64
@@ -148,21 +144,21 @@ jobs:
           python-version: "3.12"
       - name: Dependencies (Node.js - macOS, Windows)
         if: contains(matrix.os, 'macos') || contains(matrix.os, 'windows')
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.nodejs_version }}
           architecture: ${{ matrix.nodejs_arch }}
       - name: Add compiler flags
         if: matrix.nodejs_arch != 'arm64'
         run: echo "CXXFLAGS=-march=nehalem" >> $GITHUB_ENV
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install
-        run: npm install --build-from-source --unsafe-perm
-      - name: Test
-        run: npm test
-      - name: Prebuild
-        if: matrix.prebuild && startsWith(github.ref, 'refs/tags/')
-        env:
-          prebuild_upload: ${{ secrets.GITHUB_TOKEN }}
-        run: npx prebuild --runtime napi --target 8
+      - uses: actions/checkout@v4
+      - run: npm install
+      - run: npm run build
+      - run: npm test
+      - if: matrix.package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.package }}
+          path: src/build/Release/farmhash-${{ matrix.package }}.node
+          retention-days: 1
+          if-no-files-found: error

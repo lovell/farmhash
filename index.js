@@ -2,16 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
 const farmhash = (function farmhashBinding() {
+  const platform = require('./platform');
   try {
-    return require('./build/Release/farmhash.node');
-  } catch (_e) {
-    return require('./build/Debug/farmhash.node');
+    return require(`./src/build/Release/farmhash-${platform}.node`);
+  } catch (_err) {
+    try {
+      return require(`./build/farmhash-${platform}.node`);
+    } catch (_err) {
+      throw new Error(`Unsupported platform: ${platform}`);
+    }
   }
 })();
 
-// Input validation
-function verifyInteger(input) {
-  if (typeof input !== 'number' || input % 1 !== 0) {
+function verifySeed(seed) {
+  if (!Number.isInteger(seed)) {
     throw new Error('Expected an integer for seed');
   }
 }
@@ -28,7 +32,7 @@ module.exports = {
     throw new Error('Expected a String or Buffer for input');
   },
   hash32WithSeed: (input, seed) => {
-    verifyInteger(seed);
+    verifySeed(seed);
     if (typeof input === 'string') {
       return farmhash.Hash32WithSeedString(input, seed);
     }
@@ -47,7 +51,7 @@ module.exports = {
     throw new Error('Expected a String or Buffer for input');
   },
   hash64WithSeed: (input, seed) => {
-    verifyInteger(seed);
+    verifySeed(seed);
     if (typeof input === 'string') {
       return farmhash.Hash64WithSeedString(input, seed);
     }
@@ -57,8 +61,8 @@ module.exports = {
     throw new Error('Expected a String or Buffer for input');
   },
   hash64WithSeeds: (input, seed1, seed2) => {
-    verifyInteger(seed1);
-    verifyInteger(seed2);
+    verifySeed(seed1);
+    verifySeed(seed2);
     if (typeof input === 'string') {
       return farmhash.Hash64WithSeedsString(input, seed1, seed2);
     }
