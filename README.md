@@ -1,41 +1,27 @@
 # farmhash
 
-Node.js implementation of Google's
+Node-API implementation of Google's
 [FarmHash](https://github.com/google/farmhash)
 family of very fast hash functions.
 
-FarmHash is the successor to CityHash.
-Functions in the FarmHash family are not suitable for cryptography.
-A fast, cryptographically-secure alternative is
-[HighwayHash](https://github.com/lovell/highwayhash).
+Prebuilt binaries are provided for use with
+all JavaScript runtimes that provide support for Node-API v9,
+including Node.js (^18.17.0 or >= 20.3.0), Deno and Bun.
 
 The 32-bit methods return a `Number`,
 the 64-bit methods return a `BigInt`
 and the 128-bit methods are not implemented.
 
-This module uses FarmHash v1.1.0 (2015-03-01).
-It has been tested with Node.js 16 to 24
-on Linux (x64, ARM64),
-macOS (x64, ARM64) and
-Windows (x86, x64, ARM64).
+This package has been tested with Node.js 18 to 24
+on Linux, macOS and Windows
+using x64 and ARM64 CPUs.
 
-Pre-compiled binaries are provided for
-Intel CPUs with SSE4.2 intrinsics and ARM64 CPUs.
-Use the `npm install --build-from-source` flag to gain performance benefits
-on more modern CPUs such as those with AVX intrinsics.
+Functions in the FarmHash family are not suitable for cryptography.
 
 ## Installation
 
 ```sh
 npm install farmhash
-```
-
-```sh
-yarn add farmhash
-```
-
-```sh
-pnpm add farmhash
 ```
 
 ## Usage
@@ -99,7 +85,7 @@ Returns a `BigInt` containing the 64-bit unsigned integer fingerprint value of `
 Returns a `BigInt` containing the 64-bit signed integer fingerprint value of `input`.
 
 This matches the signed behaviour of Google BigQuery's
-[FARM_FINGERPRINT](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#farm_fingerprint)
+[FARM_FINGERPRINT](https://cloud.google.com/bigquery/docs/reference/standard-sql/hash_functions#farm_fingerprint)
 function.
 
 ### Hash
@@ -141,13 +127,7 @@ Returns a `BigInt` containing the 64-bit unsigned integer hash value of `input`.
 
 Returns a `BigInt` containing the 64-bit unsigned integer hash value of `input`.
 
-## Testing
-
-```sh
-npm test
-```
-
-## Licence
+## Licensing
 
 Copyright 2014 Lovell Fuller and contributors.
 

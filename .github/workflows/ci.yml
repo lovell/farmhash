@@ -17,7 +17,7 @@ jobs:
     needs: lint
     permissions:
       contents: read
-    name: build-${{ matrix.container || matrix.os }}${{ matrix.nodejs_arch }}-node${{ matrix.nodejs_version }}
+    name: build-${{ matrix.container || matrix.os }}-node${{ matrix.nodejs_version }}
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
     strategy:
@@ -39,20 +39,16 @@ jobs:
             nodejs_version: 24
           - os: ubuntu-24.04-arm
             container: arm64v8/rockylinux:8
-            nodejs_arch: arm64
             nodejs_version: 18
             package: "linux-arm64"
           - os: ubuntu-24.04-arm
             container: arm64v8/rockylinux:8
-            nodejs_arch: arm64
             nodejs_version: 20
           - os: ubuntu-24.04-arm
             container: arm64v8/rockylinux:8
-            nodejs_arch: arm64
             nodejs_version: 22
           - os: ubuntu-24.04-arm
             container: arm64v8/rockylinux:8
-            nodejs_arch: arm64
             nodejs_version: 24
           - os: ubuntu-24.04
             container: node:18-alpine3.17
@@ -69,63 +65,37 @@ jobs:
             nodejs_version: 24
           - os: macos-15-intel
             nodejs_version: 18
-            nodejs_arch: x64
             package: "darwin-x64"
           - os: macos-15-intel
             nodejs_version: 20
-            nodejs_arch: x64
           - os: macos-15-intel
             nodejs_version: 22
-            nodejs_arch: x64
           - os: macos-15-intel
             nodejs_version: 24
-            nodejs_arch: x64
-          - os: macos-14
+          - os: macos-15
             nodejs_version: 18
-            nodejs_arch: arm64
-            package: "darwin-arm64"
-          - os: macos-14
+          - os: macos-15
             nodejs_version: 20
-            nodejs_arch: arm64
-          - os: macos-14
+          - os: macos-15
             nodejs_version: 22
-            nodejs_arch: arm64
-          - os: macos-14
+          - os: macos-15
             nodejs_version: 24
-            nodejs_arch: arm64
-          - os: windows-2022
+          - os: windows-2025
             nodejs_version: 18
-            nodejs_arch: x86
-            package: "win32-ia32"
-          - os: windows-2022
-            nodejs_version: 20
-            nodejs_arch: x86
-          - os: windows-2022
-            nodejs_version: 22
-            nodejs_arch: x86
-          - os: windows-2022
-            nodejs_version: 18
-            nodejs_arch: x64
             package: "win32-x64"
-          - os: windows-2022
+          - os: windows-2025
             nodejs_version: 20
-            nodejs_arch: x64
-          - os: windows-2022
+          - os: windows-2025
             nodejs_version: 22
-            nodejs_arch: x64
-          - os: windows-2022
+          - os: windows-2025
             nodejs_version: 24
-            nodejs_arch: x64
           - os: windows-11-arm
             nodejs_version: 20
-            nodejs_arch: arm64
             package: "win32-arm64"
           - os: windows-11-arm
             nodejs_version: 22
-            nodejs_arch: arm64
           - os: windows-11-arm
             nodejs_version: 24
-            nodejs_arch: arm64
     steps:
       - name: Dependencies (Rocky Linux glibc)
         if: contains(matrix.container, 'rockylinux')
@@ -147,10 +117,46 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.nodejs_version }}
-          architecture: ${{ matrix.nodejs_arch }}
-      - name: Add compiler flags
-        if: matrix.nodejs_arch != 'arm64'
-        run: echo "CXXFLAGS=-march=nehalem" >> $GITHUB_ENV
+      - uses: actions/checkout@v4
+      - run: npm install
+      - run: npm run build
+      - run: npm test
+      - if: matrix.package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.package }}
+          path: src/build/Release/farmhash-${{ matrix.package }}.node
+          retention-days: 1
+          if-no-files-found: error
+  build-linuxmusl-arm64:
+    permissions:
+      contents: read
+    needs: lint
+    name: "build-linuxmusl-arm64-node${{ matrix.nodejs_version }}"
+    runs-on: ubuntu-24.04-arm
+    container:
+      image: ${{ matrix.container }}
+      volumes:
+        - /opt:/opt:rw,rshared
+        - /opt:/__e/node20:ro,rshared
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - container: node:18-alpine3.17
+          nodejs_version: 18
+          package: "linuxmusl-arm64"
+        - container: node:20-alpine3.18
+          nodejs_version: 20
+    steps:
+      - name: Allow Linux musl containers on ARM64 runners # https://github.com/actions/runner/issues/801#issuecomment-2394425757
+        shell: sh
+        run: |
+          sed -i "/^ID=/s/alpine/NotpineForGHA/" /etc/os-release
+          apk add nodejs --update-cache
+          mkdir /opt/bin
+          ln -s /usr/bin/node /opt/bin/node
+      - run: apk add build-base git python3 --update-cache
       - uses: actions/checkout@v4
       - run: npm install
       - run: npm run build
