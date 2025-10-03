@@ -74,6 +74,7 @@ jobs:
             nodejs_version: 24
           - os: macos-15
             nodejs_version: 18
+            package: "darwin-arm64"
           - os: macos-15
             nodejs_version: 20
           - os: macos-15
@@ -168,3 +169,22 @@ jobs:
           path: src/build/Release/farmhash-${{ matrix.package }}.node
           retention-days: 1
           if-no-files-found: error
+  publish:
+    needs:
+      - build
+      - build-linuxmusl-arm64
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          path: build
+      - if: startsWith(github.ref, 'refs/tags/v')
+        run: npm publish --tag=${{ contains(github.ref, '-rc') && 'rc' || 'latest' }} --dry-run

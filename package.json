@@ -6,7 +6,7 @@
     "Matt Ranney  <mjr@ranney.com>",
     "Jonas Hermsmeier <jhermsmeier@gmail.com> (https://jhermsmeier.de)"
   ],
-  "description": "Node.js implementation of FarmHash, Google's family of very fast hash functions",
+  "description": "Node-API implementation of FarmHash, Google's family of very fast hash functions",
   "scripts": {
     "build": "node-gyp rebuild --directory=src",
     "lint": "biome check && cpplint src/*.cc && tsd",
@@ -16,10 +16,9 @@
   "type": "commonjs",
   "types": "index.d.ts",
   "files": [
-    "binding.gyp",
+    "build",
     "index.d.ts",
-    "src/",
-    "!src/CPPLINT.cfg"
+    "platform.js"
   ],
   "preferUnplugged": true,
   "repository": {
