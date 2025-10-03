@@ -187,4 +187,4 @@ jobs:
           merge-multiple: true
           path: build
       - if: startsWith(github.ref, 'refs/tags/v')
-        run: npm publish --tag=${{ contains(github.ref, '-rc') && 'rc' || 'latest' }} --dry-run
+        run: npm publish --tag=${{ contains(github.ref, '-rc') && 'rc' || 'latest' }}
