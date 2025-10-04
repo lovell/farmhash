@@ -26,6 +26,22 @@
         'defines': [
           'FARMHASH_OPTIONAL_BUILTIN_EXPECT'
         ]
+      }],
+      ['OS == "mac"', {
+        'xcode_settings': {
+          'OTHER_LDFLAGS': [
+            '-Wl,-s',
+            '-Wl,-dead_strip'
+          ]
+        }
+      }],
+      ['OS=="linux"', {
+        'ldflags': [
+          '-Wl,-s',
+          '-Wl,--disable-new-dtags',
+          '-Wl,-z,nodelete',
+          '-Wl,-Bsymbolic-functions'
+        ]
       }]
     ],
     'defines': [
